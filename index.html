@@ -1,744 +1,348 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Animations — HDK Beta</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HDK - Accueil</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* === CONFIGURATION COMMUNE & THÈME SOMBRE === */
+        :root {
+            --primary: #C9BCF1;
+            --secondary: #B9E2CE;
+            --bg-dark: #0f0f12;
+            --bg-card: #16161c;
+            --text-main: #ffffff;
+            --text-muted: #8e8e9a;
+            --border-color: rgba(255, 255, 255, 0.05);
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
 
-<!-- ============================================================
-     POLICES : Poppins (titres) / Inter (texte courant)
-     ============================================================ -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { background-color: var(--bg-dark); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden; }
+        a { text-decoration: none; color: inherit; }
 
-<style>
-/* ============================================================
-   0. RESET & TOKENS
-   ============================================================ */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        /* === BANNIÈRE DE TEST SUPÉRIEURE === */
+        .top-banner { 
+            background-color: #000000; 
+            color: #a0a0ab; 
+            text-align: center; 
+            font-size: 11px; 
+            padding: 7px 0; 
+            letter-spacing: 1.5px; 
+            font-weight: 600; 
+            position: fixed; 
+            top: 0; 
+            width: 100%; 
+            z-index: 1001; 
+            text-transform: uppercase;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+        }
+        .top-banner .dot { 
+            display: inline-block; 
+            width: 6px; 
+            height: 6px; 
+            background-color: var(--secondary); 
+            border-radius: 50%; 
+            margin-right: 8px; 
+            box-shadow: 0 0 10px var(--secondary);
+            vertical-align: middle;
+        }
 
-:root{
-  /* Couleurs de marque */
-  --primary: #C9BCF1;
-  --primary-soft: rgba(201, 188, 241, .35);
-  --primary-dim: rgba(201, 188, 241, .12);
-  --secondary: #B9E2CE;
-  --secondary-soft: rgba(185, 226, 206, .3);
-  --secondary-dim: rgba(185, 226, 206, .12);
+        /* === HEADER FIXE NAVIGATION === */
+        .glass-header { 
+            position: fixed; 
+            top: 30px; 
+            left: 0; 
+            right: 0; 
+            height: 75px; 
+            background: rgba(15, 15, 18, 0.85); 
+            backdrop-filter: blur(16px); 
+            border-bottom: 1px solid var(--border-color); 
+            z-index: 1000; 
+            display: flex; 
+            align-items: center; 
+        }
+        .header-container { width: 100%; max-width: 1440px; margin: 0 auto; padding: 0 4%; display: flex; justify-content: space-between; align-items: center; }
+        
+        .logo-area { display: flex; align-items: center; gap: 10px; font-size: 22px; font-weight: 700; letter-spacing: -0.5px; }
+        .logo-area span { color: var(--primary); }
+        .badge-header { background: rgba(255, 255, 255, 0.06); padding: 3px 10px; border-radius: 8px; font-size: 10px; font-weight: 600; color: var(--text-muted); border: 1px solid rgba(255,255,255,0.05); }
 
-  /* Neutres */
-  --bg: #0a0a0d;
-  --bg-alt: #0d0d12;
-  --card: #17171d;
-  --card-hover: #1c1c23;
-  --border: rgba(255,255,255,.07);
-  --text: #f5f4f8;
-  --text-muted: #96959f;
+        .nav-links { display: flex; gap: 28px; height: 100%; align-items: center; }
+        .nav-links a { font-size: 14px; font-weight: 500; color: var(--text-muted); position: relative; padding: 26px 0; transition: var(--transition); }
+        .nav-links a::after { content: ''; position: absolute; bottom: -1px; left: 0; width: 0%; height: 2px; background-color: var(--text-main); transition: width 0.3s ease; }
+        .nav-links a:hover { color: var(--text-main); }
+        .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+        .nav-links a.active { color: var(--text-main); font-weight: 600; }
 
-  /* Rythme */
-  --radius-lg: 26px;
-  --radius-md: 16px;
-  --ease: cubic-bezier(.22,1,.36,1);
-}
+        .btn-discord { background: #ffffff; color: #000000; padding: 10px 22px; border-radius: 30px; font-size: 13px; font-weight: 600; transition: var(--transition); display: flex; align-items: center; gap: 6px; box-shadow: 0 4px 12px rgba(255,255,255,0.1); }
+        .btn-discord:hover { transform: translateY(-2px); background: var(--primary); box-shadow: 0 6px 20px rgba(201, 188, 241, 0.4); }
 
-html{ scroll-behavior: smooth; }
+        /* === CONTENU PRINCIPAL === */
+        main { flex: 1; padding-top: 160px; max-width: 1440px; margin: 0 auto; width: 100%; padding-left: 4%; padding-right: 4%; padding-bottom: 80px; }
 
-body{
-  background: var(--bg);
-  color: var(--text);
-  font-family: 'Inter', sans-serif;
-  overflow-x: hidden;
-  min-height: 100vh;
-}
+        /* === GRILLE DE PROJETS === */
+        .projects-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(440px, 1fr)); 
+            gap: 30px; 
+            margin-top: 20px;
+        }
 
-h1, h2, h3, .logo, .btn{ font-family: 'Poppins', sans-serif; }
+        .project-card { 
+            background: var(--bg-card); 
+            border-radius: 24px; 
+            overflow: hidden; 
+            border: 1px solid var(--border-color); 
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+        }
+        .project-card:hover { 
+            transform: translateY(-6px); 
+            border-color: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+        }
 
-a{ color: inherit; text-decoration: none; }
-button{ font-family: inherit; border: none; cursor: pointer; background: none; color: inherit; }
-img{ max-width: 100%; display:block; }
+        /* Bannières avec Dégradés Stylisés */
+        .project-banner { 
+            width: 100%; 
+            height: 210px; 
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid rgba(255,255,255,0.02);
+        }
+        
+        /* Variantes de dégradés pour correspondre à l'image */
+        .bg-purple-grad { background: linear-gradient(135deg, #a394db 0%, #c1e0d1 100%); }
+        .bg-green-grad { background: linear-gradient(135deg, #99cfb6 0%, #577d6d 100%); }
+        .bg-dark-striped { 
+            background: repeating-linear-gradient(45deg, #18181f, #18181f 12px, #131318 12px, #131318 24px); 
+            border-bottom: 1px dashed rgba(255,255,255,0.05);
+        }
 
-/* Fond ambiant : halos violet / menthe qui respirent doucement */
-.ambient{
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  overflow: hidden;
-}
-.ambient::before, .ambient::after{
-  content: "";
-  position: absolute;
-  width: 55vw;
-  height: 55vw;
-  border-radius: 50%;
-  filter: blur(120px);
-  opacity: .16;
-  animation: drift 18s ease-in-out infinite alternate;
-}
-.ambient::before{
-  background: var(--primary);
-  top: -18%;
-  left: -10%;
-}
-.ambient::after{
-  background: var(--secondary);
-  bottom: -20%;
-  right: -12%;
-  animation-delay: -9s;
-}
-@keyframes drift{
-  0%   { transform: translate(0,0) scale(1); }
-  100% { transform: translate(4%, 6%) scale(1.08); }
-}
+        /* Conteneur d'icône au centre */
+        .icon-wrapper {
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            width: 56px;
+            height: 56px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .icon-wrapper svg { width: 24px; height: 24px; color: #ffffff; }
+        .bg-dark-striped .icon-wrapper { border: 1px dashed rgba(255, 255, 255, 0.2); background: rgba(255,255,255,0.02); }
 
-/* ============================================================
-   1. BADGE BETA
-   ============================================================ */
-.beta-ribbon{
-  position: relative;
-  z-index: 30;
-  display: flex;
-  justify-content: center;
-  padding: 10px 0;
-  background: linear-gradient(90deg, rgba(201,188,241,.08), rgba(185,226,206,.08));
-  border-bottom: 1px solid var(--border);
-}
-.beta-ribbon span{
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: .12em;
-  color: var(--primary);
-  text-transform: uppercase;
-}
-.beta-ribbon .dot{
-  width: 6px; height: 6px; border-radius: 50%;
-  background: var(--secondary);
-  box-shadow: 0 0 10px 2px var(--secondary-soft);
-  animation: pulse-dot 1.8s ease-in-out infinite;
-}
-@keyframes pulse-dot{
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50%      { opacity: .4; transform: scale(.7); }
-}
+        /* Badges de statut */
+        .status-badge { 
+            position: absolute; 
+            top: 20px; 
+            right: 20px; 
+            background: rgba(0, 0, 0, 0.5); 
+            backdrop-filter: blur(8px);
+            padding: 5px 14px; 
+            border-radius: 30px; 
+            font-size: 10.5px; 
+            font-weight: 700; 
+            letter-spacing: 0.5px;
+            display: flex; 
+            align-items: center; 
+            gap: 6px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        .status-badge.online { color: #5ce1a6; }
+        .status-badge.online::before { content: ''; display: inline-block; width: 6px; height: 6px; background: #5ce1a6; border-radius: 50%; box-shadow: 0 0 8px #5ce1a6; }
+        
+        .status-badge.dev { color: #f5a623; }
+        .status-badge.dev::before { content: ''; display: inline-block; width: 6px; height: 6px; background: #f5a623; border-radius: 50%; box-shadow: 0 0 8px #f5a623; }
 
-/* ============================================================
-   2. HEADER
-   ============================================================ */
-header{
-  position: sticky;
-  top: 0;
-  z-index: 40;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 18px clamp(20px, 5vw, 56px);
-  background: rgba(10,10,13,.6);
-  backdrop-filter: blur(18px) saturate(140%);
-  -webkit-backdrop-filter: blur(18px) saturate(140%);
-  border-bottom: 1px solid var(--border);
-}
+        .status-badge.soon { color: #8e8e9a; background: rgba(255,255,255,0.05); }
+        .status-badge.soon::before { content: ''; display: inline-block; width: 6px; height: 6px; background: #8e8e9a; border-radius: 50%; }
 
-.logo{
-  font-weight: 800;
-  font-size: 20px;
-  letter-spacing: .02em;
-  display: flex;
-  align-items: baseline;
-  gap: 2px;
-}
-.logo span.accent{ color: var(--primary); }
-.logo small{
-  font-family: 'Inter', sans-serif;
-  font-size: 10px;
-  font-weight: 600;
-  color: var(--secondary);
-  border: 1px solid var(--secondary-soft);
-  background: var(--secondary-dim);
-  padding: 2px 6px;
-  border-radius: 20px;
-  margin-left: 8px;
-  letter-spacing: .08em;
-}
+        /* Contenu texte */
+        .project-info { padding: 26px; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
+        .project-info h3 { font-size: 21px; font-weight: 600; margin-bottom: 10px; letter-spacing: -0.3px; }
+        .project-info p { color: var(--text-muted); font-size: 14px; line-height: 1.6; margin-bottom: 24px; }
 
-nav.main-nav{
-  display: flex;
-  gap: 32px;
-}
-nav.main-nav a{
-  position: relative;
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--text-muted);
-  transition: color .3s var(--ease);
-}
-nav.main-nav a::after{
-  content: "";
-  position: absolute;
-  left: 0; bottom: -6px;
-  height: 2px; width: 0;
-  background: linear-gradient(90deg, var(--primary), var(--secondary));
-  transition: width .3s var(--ease);
-  border-radius: 2px;
-}
-nav.main-nav a:hover{ color: var(--text); }
-nav.main-nav a:hover::after{ width: 100%; }
-nav.main-nav a.active{ color: var(--text); }
-nav.main-nav a.active::after{ width: 100%; }
+        /* Boutons */
+        .btn-open { 
+            background: rgba(255, 255, 255, 0.05); 
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--text-main); 
+            padding: 10px 22px; 
+            border-radius: 12px; 
+            font-size: 13px; 
+            font-weight: 600; 
+            display: inline-flex; 
+            align-items: center; 
+            gap: 8px; 
+            align-self: flex-start;
+            transition: var(--transition);
+        }
+        .project-card:hover .btn-open:not(.disabled) {
+            background: var(--text-main);
+            color: #000000;
+            transform: translateX(4px);
+        }
+        .btn-open.disabled {
+            background: rgba(255, 255, 255, 0.02);
+            color: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.02);
+            cursor: not-allowed;
+        }
 
-.discord-btn{
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 18px;
-  border-radius: 999px;
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
-  color: #0a0a0d;
-  font-size: 13px;
-  font-weight: 700;
-  box-shadow: 0 0 0 1px rgba(255,255,255,.06), 0 8px 24px -8px var(--primary-soft);
-  transition: transform .3s var(--ease), box-shadow .3s var(--ease);
-}
-.discord-btn:hover{
-  transform: translateY(-2px) scale(1.03);
-  box-shadow: 0 0 0 1px rgba(255,255,255,.1), 0 14px 30px -8px var(--primary-soft);
-}
-.discord-btn svg{ width: 16px; height: 16px; }
-
-.nav-toggle{
-  display: none;
-  width: 34px; height: 34px;
-  border-radius: 10px;
-  background: var(--card);
-  border: 1px solid var(--border);
-  position: relative;
-}
-.nav-toggle span, .nav-toggle span::before, .nav-toggle span::after{
-  content: "";
-  position: absolute;
-  left: 8px; right: 8px;
-  height: 2px;
-  background: var(--text);
-  border-radius: 2px;
-  transition: transform .3s var(--ease), opacity .3s var(--ease);
-}
-.nav-toggle span{ top: 16px; }
-.nav-toggle span::before{ top: -6px; }
-.nav-toggle span::after{ top: 6px; }
-.nav-toggle.open span{ background: transparent; }
-.nav-toggle.open span::before{ transform: translateY(6px) rotate(45deg); }
-.nav-toggle.open span::after{ transform: translateY(-6px) rotate(-45deg); }
-
-/* ============================================================
-   3. GRILLE DE CARTES — applications HDK
-   ============================================================ */
-.app-grid{
-  position: relative;
-  z-index: 1;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: clamp(48px, 8vw, 80px) clamp(20px, 5vw, 56px) 120px;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 28px;
-}
-
-.app-card{
-  --mx: 50%;
-  --my: 50%;
-  position: relative;
-  border-radius: var(--radius-lg);
-  background: var(--card);
-  border: 1px solid var(--border);
-  overflow: hidden;
-  cursor: pointer;
-  opacity: 0;
-  transform: translateY(28px);
-  transition: transform .5s var(--ease), box-shadow .5s var(--ease), border-color .5s var(--ease);
-  will-change: transform;
-  transform-style: preserve-3d;
-  perspective: 900px;
-}
-.app-card.in-view{
-  animation: card-in .7s var(--ease) forwards;
-}
-@keyframes card-in{
-  to{ opacity: 1; transform: translateY(0); }
-}
-
-/* lueur qui suit le curseur */
-.app-card::before{
-  content:"";
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  background: radial-gradient(500px circle at var(--mx) var(--my), rgba(201,188,241,.18), transparent 60%);
-  opacity: 0;
-  transition: opacity .4s var(--ease);
-  pointer-events: none;
-}
-.app-card:hover::before{ opacity: 1; }
-
-.app-card:hover{
-  border-color: var(--primary-soft);
-  box-shadow:
-    0 20px 60px -20px rgba(0,0,0,.6),
-    0 0 0 1px var(--primary-soft),
-    0 0 60px -10px var(--primary-soft);
-}
-
-.app-card .card-inner{
-  position: relative;
-  z-index: 2;
-}
-
-/* vignette / miniature */
-.app-thumb{
-  position: relative;
-  height: 190px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-}
-.app-thumb::after{
-  content:"";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(23,23,29,1) 100%);
-}
-.app-thumb .icon-wrap{
-  position: relative;
-  z-index: 2;
-  width: 62px; height: 62px;
-  border-radius: 18px;
-  background: rgba(10,10,13,.28);
-  border: 1px solid rgba(255,255,255,.25);
-  backdrop-filter: blur(6px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: transform .4s var(--ease);
-}
-.app-card:hover .icon-wrap{ transform: translateY(-4px) scale(1.06); }
-.app-thumb svg{ width: 28px; height: 28px; stroke: #0a0a0d; }
-
-.app-thumb.thumb-planning{ background: linear-gradient(135deg, #C9BCF1, #8f7fd6); }
-.app-thumb.thumb-editeur{  background: linear-gradient(135deg, #1c1c24, #6a5ea8 65%, #C9BCF1); }
-.app-thumb.thumb-linktree{ background: linear-gradient(135deg, #B9E2CE, #6fae94); }
-.app-thumb.thumb-overlay{  background: linear-gradient(135deg, #1c1c24, #4f8f76 65%, #B9E2CE); }
-.app-thumb.thumb-museum{   background: linear-gradient(135deg, #C9BCF1, #B9E2CE); }
-.app-thumb.thumb-soon{
-  background: repeating-linear-gradient(135deg, #17171d, #17171d 10px, #1c1c23 10px, #1c1c23 20px);
-}
-.app-thumb.thumb-soon .icon-wrap{
-  background: transparent;
-  border-style: dashed;
-  border-color: rgba(255,255,255,.25);
-}
-.app-thumb.thumb-soon svg{ stroke: var(--text-muted); }
-
-.status-chip{
-  position: absolute;
-  top: 14px; right: 14px;
-  z-index: 3;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: .06em;
-  text-transform: uppercase;
-  padding: 5px 10px;
-  border-radius: 999px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  background: rgba(10,10,13,.5);
-  backdrop-filter: blur(6px);
-  border: 1px solid rgba(255,255,255,.14);
-  color: #fff;
-}
-.status-chip .pip{ width: 6px; height: 6px; border-radius: 50%; }
-.status-chip.live .pip{ background: #6ee7a8; box-shadow: 0 0 8px 1px #6ee7a8; }
-.status-chip.dev .pip{ background: #f3b45a; box-shadow: 0 0 8px 1px #f3b45a; }
-.status-chip.soon .pip{ background: var(--text-muted); }
-
-.app-body{
-  padding: 22px 24px 24px;
-}
-.app-body h3{
-  font-size: 19px;
-  font-weight: 700;
-  margin-bottom: 8px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.app-body p{
-  font-size: 13.5px;
-  line-height: 1.6;
-  color: var(--text-muted);
-  margin-bottom: 20px;
-  min-height: 42px;
-}
-
-.app-open{
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 13px;
-  font-weight: 700;
-  padding: 10px 16px;
-  border-radius: 12px;
-  background: var(--primary-dim);
-  color: var(--primary);
-  border: 1px solid var(--primary-soft);
-  transition: background .3s var(--ease), color .3s var(--ease), transform .3s var(--ease), gap .3s var(--ease);
-}
-.app-open svg{ width: 14px; height: 14px; transition: transform .3s var(--ease); }
-.app-card:hover .app-open{
-  background: var(--primary);
-  color: #0a0a0d;
-  gap: 12px;
-}
-.app-card:hover .app-open svg{ transform: translateX(2px); }
-
-.app-open.disabled{
-  background: rgba(255,255,255,.04);
-  color: var(--text-muted);
-  border-color: var(--border);
-  pointer-events: none;
-}
-
-/* ============================================================
-   4. FOOTER
-   ============================================================ */
-footer{
-  position: relative;
-  z-index: 1;
-  border-top: 1px solid var(--border);
-  padding: 40px clamp(20px, 5vw, 56px) 34px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  align-items: center;
-  justify-content: space-between;
-  background: var(--bg-alt);
-}
-.footer-left{
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  font-size: 13px;
-  color: var(--text-muted);
-}
-.footer-left .logo{ font-size: 15px; }
-.socials{ display: flex; gap: 10px; }
-.socials a{
-  width: 36px; height: 36px;
-  border-radius: 10px;
-  background: var(--card);
-  border: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: transform .3s var(--ease), border-color .3s var(--ease), color .3s var(--ease);
-}
-.socials a svg{ width: 16px; height: 16px; }
-.socials a:hover{
-  transform: translateY(-3px);
-  border-color: var(--primary-soft);
-  color: var(--primary);
-}
-.footer-tag{
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: .1em;
-  color: var(--secondary);
-  border: 1px solid var(--secondary-soft);
-  background: var(--secondary-dim);
-  padding: 6px 12px;
-  border-radius: 999px;
-}
-
-/* ============================================================
-   5. RESPONSIVE
-   ============================================================ */
-@media (max-width: 900px){
-  .app-grid{ grid-template-columns: 1fr; }
-}
-
-@media (max-width: 760px){
-  nav.main-nav{
-    position: fixed;
-    top: 0; right: 0;
-    height: 100vh;
-    width: min(78vw, 320px);
-    background: rgba(10,10,13,.92);
-    backdrop-filter: blur(20px);
-    flex-direction: column;
-    padding: 100px 32px;
-    gap: 26px;
-    transform: translateX(100%);
-    transition: transform .4s var(--ease);
-    border-left: 1px solid var(--border);
-  }
-  nav.main-nav.open{ transform: translateX(0); }
-  nav.main-nav a{ font-size: 16px; }
-  .nav-toggle{ display: block; }
-  .discord-btn span{ display: none; }
-  .discord-btn{ padding: 10px 14px; }
-}
-
-@media (prefers-reduced-motion: reduce){
-  *{ animation-duration: .001s !important; transition-duration: .001s !important; }
-}
-</style>
+        /* === RESPONSIVE === */
+        @media (max-width: 900px) {
+            .nav-links { display: none; }
+            main { padding-top: 130px; }
+            .projects-grid { grid-template-columns: 1fr; }
+        }
+    </style>
 </head>
 <body>
 
-<div class="ambient"></div>
+    <!-- Bannière supérieure de test -->
+    <div class="top-banner"><span class="dot"></span> HDK — VERSION BETA EN COURS DE TEST</div>
 
-<!-- ============================================================
-     BADGE BETA
-     ============================================================ -->
-<div class="beta-ribbon">
-  <span><span class="dot"></span> HDK — Version Beta en cours de test</span>
-</div>
-
-<!-- ============================================================
-     HEADER
-     ============================================================ -->
-<header>
-  <a href="index.html" class="logo">HDK<span class="accent">.</span><small>BETA</small></a>
-
-  <nav class="main-nav" id="mainNav">
-    <a href="index.html">Accueil</a>
-    <a href="museum.html">Museum</a>
-    <a href="animation.html" class="active">Animations</a>
-    <a href="projets.html">Projets</a>
-    <a href="news.html">News</a>
-    <a href="contact.html">Contact</a>
-  </nav>
-
-  <div style="display:flex; align-items:center; gap:12px;">
-    <a class="discord-btn" href="#" target="_blank" rel="noopener">
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.3 4.9A18 18 0 0 0 15.9 3.5c-.2.4-.5 1-.6 1.4a16.7 16.7 0 0 0-4.6 0c-.2-.4-.4-1-.6-1.4A18 18 0 0 0 5.7 4.9C2.9 9 2.1 13 2.5 17a18.2 18.2 0 0 0 5.5 2.7c.4-.6.8-1.3 1.1-2a11.6 11.6 0 0 1-1.8-.8l.4-.3c3.4 1.6 7.1 1.6 10.5 0l.4.3c-.6.3-1.2.6-1.8.8.3.7.7 1.4 1.1 2A18.2 18.2 0 0 0 21.5 17c.5-4.6-.7-8.6-1.2-12.1ZM9.7 14.4c-1 0-1.8-.9-1.8-2s.8-2 1.8-2 1.9.9 1.8 2c0 1.1-.8 2-1.8 2Zm4.7 0c-1 0-1.8-.9-1.8-2s.8-2 1.8-2 1.9.9 1.8 2c0 1.1-.8 2-1.8 2Z"/></svg>
-      <span>Discord</span>
-    </a>
-    <button class="nav-toggle" id="navToggle" aria-label="Menu"><span></span></button>
-  </div>
-</header>
-
-<!-- ============================================================
-     GRILLE DES APPLICATIONS
-     ============================================================ -->
-<section class="app-grid" id="appGrid">
-
-  <!-- Planning -->
-  <article class="app-card" data-href="planning.html">
-    <div class="card-inner">
-      <div class="app-thumb thumb-planning">
-        <span class="status-chip live"><span class="pip"></span>En ligne</span>
-        <div class="icon-wrap">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="3"/><path d="M8 2v4M16 2v4M3 9h18"/></svg>
+    <!-- Header avec navigation corrigée ("Accueil" en actif) -->
+    <header class="glass-header">
+        <div class="header-container">
+            <div class="logo-area">
+                <a href="index.html">HDK<span>.</span></a>
+                <span class="badge-header">BETA</span>
+            </div>
+            <nav class="nav-links">
+                <a href="index.html" class="active">Accueil</a>
+                <a href="museum.html">Museum</a>
+                <a href="animation.html">Animations</a>
+                <a href="projets.html">Projets</a>
+                <a href="news.html">News</a>
+                <a href="contact.html">Contact</a>
+            </nav>
+            <a href="https://discord.gg/votre-lien" target="_blank" class="btn-discord">Discord</a>
         </div>
-      </div>
-      <div class="app-body">
-        <h3>Planning HDK</h3>
-        <p>Le calendrier de stream de la semaine, avec détection des sessions live et compte à rebours en temps réel.</p>
-        <a class="app-open" href="planning.html">
-          Ouvrir
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-        </a>
-      </div>
-    </div>
-  </article>
+    </header>
 
-  <!-- Éditeur -->
-  <article class="app-card" data-href="editeur.html">
-    <div class="card-inner">
-      <div class="app-thumb thumb-editeur">
-        <span class="status-chip live"><span class="pip"></span>En ligne</span>
-        <div class="icon-wrap">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></svg>
+    <!-- Grille des projets de l'accueil -->
+    <main>
+        <div class="projects-grid">
+            
+            <!-- 1. Planning HDK -->
+            <div class="project-card">
+                <div class="project-banner bg-purple-grad">
+                    <span class="status-badge online">EN LIGNE</span>
+                    <div class="icon-wrapper">
+                        <!-- Icône Calendrier -->
+                        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                    </div>
+                </div>
+                <div class="project-info">
+                    <div>
+                        <h3>Planning HDK</h3>
+                        <p>Le calendrier de stream de la semaine, avec détection des sessions live et compte à rebours en temps réel.</p>
+                    </div>
+                    <a href="#" class="btn-open">Ouvrir &rarr;</a>
+                </div>
+            </div>
+
+            <!-- 2. Éditeur de planning -->
+            <div class="project-card">
+                <div class="project-banner bg-purple-grad">
+                    <span class="status-badge online">EN LIGNE</span>
+                    <div class="icon-wrapper">
+                        <!-- Icône Code -->
+                        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+                    </div>
+                </div>
+                <div class="project-info">
+                    <div>
+                        <h3>Éditeur de planning</h3>
+                        <p>Interface connectée à GitHub pour modifier et publier le planning directement en production.</p>
+                    </div>
+                    <a href="#" class="btn-open">Ouvrir &rarr;</a>
+                </div>
+            </div>
+
+            <!-- 3. Page de liens HDK -->
+            <div class="project-card">
+                <div class="project-banner bg-green-grad">
+                    <span class="status-badge online">EN LIGNE</span>
+                    <div class="icon-wrapper">
+                        <!-- Icône Lien -->
+                        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
+                    </div>
+                </div>
+                <div class="project-info">
+                    <div>
+                        <h3>Page de liens HDK</h3>
+                        <p>Le point d'entrée de la communauté : réseaux, Discord et projets du moment réunis sur une seule page.</p>
+                    </div>
+                    <a href="#" class="btn-open">Ouvrir &rarr;</a>
+                </div>
+            </div>
+
+            <!-- 4. Overlay de stream -->
+            <div class="project-card">
+                <div class="project-banner bg-green-grad">
+                    <span class="status-badge dev">EN DÉVELOPPEMENT</span>
+                    <div class="icon-wrapper">
+                        <!-- Icône Écran -->
+                        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                    </div>
+                </div>
+                <div class="project-info">
+                    <div>
+                        <h3>Overlay de stream</h3>
+                        <p>Habillage animé pour OBS : alertes, transitions et widgets aux couleurs de la communauté.</p>
+                    </div>
+                    <a href="#" class="btn-open">Ouvrir &rarr;</a>
+                </div>
+            </div>
+
+            <!-- 5. Museum HDK -->
+            <div class="project-card">
+                <div class="project-banner bg-purple-grad">
+                    <span class="status-badge online">EN LIGNE</span>
+                    <div class="icon-wrapper">
+                        <!-- Icône Maison/Musée -->
+                        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                    </div>
+                </div>
+                <div class="project-info">
+                    <div>
+                        <h3>Museum HDK</h3>
+                        <p>La frise chronologique interactive : tous les grands moments de l'histoire de la communauté.</p>
+                    </div>
+                    <a href="#" class="btn-open">Ouvrir &rarr;</a>
+                </div>
+            </div>
+
+            <!-- 6. Prochaine application -->
+            <div class="project-card">
+                <div class="project-banner bg-dark-striped">
+                    <span class="status-badge soon">BIENTÔT</span>
+                    <div class="icon-wrapper">
+                        <!-- Icône Plus -->
+                        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"></path></svg>
+                    </div>
+                </div>
+                <div class="project-info">
+                    <div>
+                        <h3>Prochaine application</h3>
+                        <p>Une nouvelle création HDK est en préparation. Elle apparaîtra ici dès sa mise en ligne.</p>
+                    </div>
+                    <button class="btn-open disabled">Bientôt disponible</button>
+                </div>
+            </div>
+
         </div>
-      </div>
-      <div class="app-body">
-        <h3>Éditeur de planning</h3>
-        <p>Interface connectée à GitHub pour modifier et publier le planning directement en production.</p>
-        <a class="app-open" href="editeur.html">
-          Ouvrir
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-        </a>
-      </div>
-    </div>
-  </article>
+    </main>
 
-  <!-- Linktree / Accueil -->
-  <article class="app-card" data-href="index.html">
-    <div class="card-inner">
-      <div class="app-thumb thumb-linktree">
-        <span class="status-chip live"><span class="pip"></span>En ligne</span>
-        <div class="icon-wrap">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.5.5l2-2a5 5 0 0 0-7-7l-1.2 1.2"/><path d="M14 11a5 5 0 0 0-7.5-.5l-2 2a5 5 0 0 0 7 7l1.2-1.2"/></svg>
-        </div>
-      </div>
-      <div class="app-body">
-        <h3>Page de liens HDK</h3>
-        <p>Le point d'entrée de la communauté : réseaux, Discord et projets du moment réunis sur une seule page.</p>
-        <a class="app-open" href="index.html">
-          Ouvrir
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-        </a>
-      </div>
-    </div>
-  </article>
-
-  <!-- Overlay OBS -->
-  <article class="app-card" data-href="#">
-    <div class="card-inner">
-      <div class="app-thumb thumb-overlay">
-        <span class="status-chip dev"><span class="pip"></span>En développement</span>
-        <div class="icon-wrap">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
-        </div>
-      </div>
-      <div class="app-body">
-        <h3>Overlay de stream</h3>
-        <p>Habillage animé pour OBS : alertes, transitions et widgets aux couleurs de la communauté.</p>
-        <a class="app-open" href="#">
-          Ouvrir
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-        </a>
-      </div>
-    </div>
-  </article>
-
-  <!-- Museum -->
-  <article class="app-card" data-href="museum.html">
-    <div class="card-inner">
-      <div class="app-thumb thumb-museum">
-        <span class="status-chip live"><span class="pip"></span>En ligne</span>
-        <div class="icon-wrap">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M4 21V9l8-6 8 6v12M9 21v-6h6v6"/></svg>
-        </div>
-      </div>
-      <div class="app-body">
-        <h3>Museum HDK</h3>
-        <p>La frise chronologique interactive : tous les grands moments de l'histoire de la communauté.</p>
-        <a class="app-open" href="museum.html">
-          Ouvrir
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-        </a>
-      </div>
-    </div>
-  </article>
-
-  <!-- Bientôt -->
-  <article class="app-card">
-    <div class="card-inner">
-      <div class="app-thumb thumb-soon">
-        <span class="status-chip soon"><span class="pip"></span>Bientôt</span>
-        <div class="icon-wrap">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
-        </div>
-      </div>
-      <div class="app-body">
-        <h3>Prochaine application</h3>
-        <p>Une nouvelle création HDK est en préparation. Elle apparaîtra ici dès sa mise en ligne.</p>
-        <span class="app-open disabled">
-          Bientôt disponible
-        </span>
-      </div>
-    </div>
-  </article>
-
-</section>
-
-<!-- ============================================================
-     FOOTER
-     ============================================================ -->
-<footer>
-  <div class="footer-left">
-    <a href="index.html" class="logo">HDK<span class="accent">.</span></a>
-    <span>© 2026 HDK — Communauté TvAbdou</span>
-  </div>
-
-  <div class="socials">
-    <a href="#" target="_blank" rel="noopener" aria-label="Discord">
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.3 4.9A18 18 0 0 0 15.9 3.5c-.2.4-.5 1-.6 1.4a16.7 16.7 0 0 0-4.6 0c-.2-.4-.4-1-.6-1.4A18 18 0 0 0 5.7 4.9C2.9 9 2.1 13 2.5 17a18.2 18.2 0 0 0 5.5 2.7c.4-.6.8-1.3 1.1-2a11.6 11.6 0 0 1-1.8-.8l.4-.3c3.4 1.6 7.1 1.6 10.5 0l.4.3c-.6.3-1.2.6-1.8.8.3.7.7 1.4 1.1 2A18.2 18.2 0 0 0 21.5 17c.5-4.6-.7-8.6-1.2-12.1ZM9.7 14.4c-1 0-1.8-.9-1.8-2s.8-2 1.8-2 1.9.9 1.8 2c0 1.1-.8 2-1.8 2Zm4.7 0c-1 0-1.8-.9-1.8-2s.8-2 1.8-2 1.9.9 1.8 2c0 1.1-.8 2-1.8 2Z"/></svg>
-    </a>
-    <a href="#" target="_blank" rel="noopener" aria-label="Twitch">
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 2 2 6.5v13H8V22l3.5-2.5H16L21 15V2H4Zm15 12-3 3h-4l-2.5 2.5V17H6V4h13v10Z"/><path d="M15.5 7h2v5h-2zM10.5 7h2v5h-2z"/></svg>
-    </a>
-  </div>
-
-  <span class="footer-tag">HDK BETA</span>
-</footer>
-
-<script>
-/* ============================================================
-   JS — navigation mobile
-   ============================================================ */
-const navToggle = document.getElementById('navToggle');
-const mainNav = document.getElementById('mainNav');
-navToggle.addEventListener('click', () => {
-  navToggle.classList.toggle('open');
-  mainNav.classList.toggle('open');
-});
-mainNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-  navToggle.classList.remove('open');
-  mainNav.classList.remove('open');
-}));
-
-/* ============================================================
-   JS — apparition des cartes au scroll
-   ============================================================ */
-const cards = document.querySelectorAll('.app-card');
-const io = new IntersectionObserver((entries) => {
-  entries.forEach((entry, i) => {
-    if (entry.isIntersecting) {
-      setTimeout(() => entry.target.classList.add('in-view'), i * 60);
-      io.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.15 });
-cards.forEach(card => io.observe(card));
-
-/* ============================================================
-   JS — inclinaison 3D + lueur qui suit le curseur
-   ============================================================ */
-cards.forEach(card => {
-  card.addEventListener('mousemove', (e) => {
-    const rect = card.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-
-    // position de la lueur
-    card.style.setProperty('--mx', `${x}px`);
-    card.style.setProperty('--my', `${y}px`);
-
-    // légère inclinaison 3D
-    const cx = rect.width / 2;
-    const cy = rect.height / 2;
-    const rotateY = ((x - cx) / cx) * 4;   // amplitude en degrés
-    const rotateX = -((y - cy) / cy) * 4;
-    card.style.transform = `perspective(900px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`;
-  });
-
-  card.addEventListener('mouseleave', () => {
-    card.style.transform = 'perspective(900px) rotateX(0) rotateY(0) translateY(0)';
-  });
-
-  // rendre toute la carte cliquable
-  card.addEventListener('click', (e) => {
-    if (e.target.closest('a')) return; // laisser le lien natif agir
-    const href = card.dataset.href;
-    if (href && href !== '#') window.location.href = href;
-  });
-});
-</script>
 </body>
 </html>
