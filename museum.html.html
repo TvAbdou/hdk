@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Museum HDK - L'histoire</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --primary: #C9BCF1; --secondary: #B9E2CE; --bg-dark: #121212; --bg-card: #1E1E24; --text-main: #ffffff; --text-muted: #999999; --transition: all 0.3s ease; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { background-color: var(--bg-dark); color: var(--text-main); line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column; }
+        a { text-decoration: none; color: inherit; }
+        
+        /* BANNER & HEADER (Style de ton nouveau design) */
+        .top-banner { background-color: #000; color: #888; text-align: center; font-size: 11px; padding: 6px 0; letter-spacing: 1px; font-weight: 500; position: fixed; top: 0; width: 100%; z-index: 1001; }
+        .top-banner .dot { display: inline-block; width: 6px; height: 6px; background-color: var(--secondary); border-radius: 50%; margin-right: 8px; box-shadow: 0 0 8px var(--secondary); }
+        
+        .glass-header { position: fixed; top: 28px; left: 0; right: 0; height: 70px; background: rgba(18, 18, 18, 0.8); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.05); z-index: 1000; display: flex; align-items: center; }
+        .header-container { width: 100%; max-width: 1440px; margin: 0 auto; padding: 0 5%; display: flex; justify-content: space-between; align-items: center; }
+        .logo-area { display: flex; align-items: center; gap: 10px; font-size: 20px; font-weight: 700; }
+        .badge-beta { background: rgba(255,255,255,0.1); padding: 3px 8px; border-radius: 12px; font-size: 10px; font-weight: 600; color: #ddd; letter-spacing: 0.5px; }
+        
+        .nav-links { display: flex; gap: 30px; height: 100%; align-items: center; }
+        .nav-links a { font-size: 14px; font-weight: 500; color: var(--text-muted); position: relative; padding: 25px 0; transition: var(--transition); }
+        .nav-links a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0%; height: 2px; background-color: var(--text-main); transition: width 0.3s ease; }
+        .nav-links a:hover { color: var(--text-main); }
+        .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+        .nav-links a.active { color: var(--text-main); }
+        
+        .btn-discord { background: #fff; color: #000; padding: 8px 16px; border-radius: 20px; font-size: 13px; font-weight: 600; transition: transform 0.2s; }
+        .btn-discord:hover { transform: scale(1.05); }
+
+        /* TIMELINE MUSEUM */
+        main { flex: 1; padding-top: 150px; max-width: 1000px; margin: 0 auto; width: 100%; padding-bottom: 100px; }
+        .page-title { text-align: center; margin-bottom: 60px; }
+        .page-title h1 { font-size: 40px; margin-bottom: 10px; }
+        
+        .timeline { position: relative; padding: 20px 0; }
+        .timeline::before { content: ''; position: absolute; top: 0; bottom: 0; left: 50%; width: 2px; background: rgba(255,255,255,0.1); transform: translateX(-50%); }
+        
+        .timeline-item { position: relative; margin-bottom: 50px; width: 50%; padding-right: 40px; left: 0; }
+        .timeline-item:nth-child(even) { left: 50%; padding-right: 0; padding-left: 40px; }
+        
+        .timeline-dot { position: absolute; right: -8px; top: 20px; width: 16px; height: 16px; border-radius: 50%; background: var(--primary); box-shadow: 0 0 10px var(--primary); }
+        .timeline-item:nth-child(even) .timeline-dot { left: -8px; right: auto; }
+        
+        .timeline-content { background: var(--bg-card); padding: 25px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.05); transition: transform 0.3s; }
+        .timeline-content:hover { transform: translateY(-5px); border-color: rgba(201, 188, 241, 0.3); }
+        .timeline-date { color: var(--primary); font-weight: 600; font-size: 14px; margin-bottom: 10px; display: block; }
+        .timeline-content h3 { font-size: 20px; margin-bottom: 10px; }
+        .timeline-content p { color: var(--text-muted); font-size: 14px; }
+    </style>
+</head>
+<body>
+
+    <div class="top-banner"><span class="dot"></span> HDK — VERSION BETA EN COURS DE TEST</div>
+
+    <header class="glass-header">
+        <div class="header-container">
+            <div class="logo-area">
+                <a href="index.html">HDK.</a>
+                <span class="badge-beta">BETA</span>
+            </div>
+            <nav class="nav-links">
+                <a href="index.html">Accueil</a>
+                <a href="museum.html" class="active">Museum</a>
+                <a href="animation.html">Animations</a>
+                <a href="projets.html">Projets</a>
+                <a href="news.html">News</a>
+                <a href="contact.html">Contact</a>
+            </nav>
+            <a href="#" class="btn-discord">Discord</a>
+        </div>
+    </header>
+
+    <main>
+        <div class="page-title">
+            <h1>Museum <span style="color: var(--primary);">HDK</span></h1>
+            <p style="color: var(--text-muted);">L'histoire et l'évolution de la communauté.</p>
+        </div>
+
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <span class="timeline-date">Juillet 2026</span>
+                    <h3>Lancement de la Beta HDK</h3>
+                    <p>Déploiement du nouveau hub centralisant toutes les créations de la communauté TV Abdou.</p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-dot" style="background: var(--secondary); box-shadow: 0 0 10px var(--secondary);"></div>
+                <div class="timeline-content">
+                    <span class="timeline-date">Juin 2026</span>
+                    <h3>Premières fondations</h3>
+                    <p>Mise en place de l'équipe de développement et création des premiers concepts graphiques.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+</body>
+</html>
