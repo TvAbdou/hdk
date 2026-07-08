@@ -3,138 +3,211 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0f0f12">
     <title>HDK - Animations</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         /* === CONFIGURATION COMMUNE & THÈME SOMBRE === */
         :root {
             --primary: #C9BCF1;
+            --primary-glow: rgba(201, 188, 241, 0.15);
             --secondary: #B9E2CE;
+            --success: #5ce1a6;
             --bg-dark: #0f0f12;
             --bg-card: #16161c;
             --text-main: #ffffff;
             --text-muted: #8e8e9a;
             --border-color: rgba(255, 255, 255, 0.05);
-            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --transition-fast: all 0.2s ease;
+            --transition-smooth: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
-        body { background-color: var(--bg-dark); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden; }
+        
+        body { 
+            background-color: var(--bg-dark); 
+            color: var(--text-main); 
+            min-height: 100vh; 
+            display: flex; 
+            flex-direction: column; 
+            overflow-x: hidden; 
+        }
+        
         a { text-decoration: none; color: inherit; }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-dark); }
+        ::-webkit-scrollbar-thumb { background: #2a2a35; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
 
         /* === BANNIÈRE DE TEST SUPÉRIEURE === */
         .top-banner { 
-            background-color: #000000; color: #a0a0ab; text-align: center; font-size: 11px; padding: 7px 0; 
-            letter-spacing: 1.5px; font-weight: 600; position: fixed; top: 0; width: 100%; z-index: 1001; 
-            text-transform: uppercase; border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+            background: linear-gradient(90deg, #000 0%, #0a0a0d 50%, #000 100%);
+            color: #a0a0ab; text-align: center; font-size: 11px; padding: 8px 0; 
+            letter-spacing: 2px; font-weight: 600; position: fixed; top: 0; width: 100%; z-index: 1001; 
+            text-transform: uppercase; border-bottom: 1px solid rgba(255, 255, 255, 0.03);
         }
         .top-banner .dot { 
             display: inline-block; width: 6px; height: 6px; background-color: var(--secondary); 
             border-radius: 50%; margin-right: 8px; box-shadow: 0 0 10px var(--secondary); vertical-align: middle;
+            animation: pulseBanner 2s infinite alternate;
+        }
+
+        @keyframes pulseBanner {
+            0% { box-shadow: 0 0 5px var(--secondary), 0 0 10px var(--secondary); transform: scale(0.9); }
+            100% { box-shadow: 0 0 10px var(--secondary), 0 0 20px var(--secondary); transform: scale(1.1); }
         }
 
         /* === HEADER FIXE NAVIGATION === */
         .glass-header { 
-            position: fixed; top: 30px; left: 0; right: 0; height: 75px; background: rgba(15, 15, 18, 0.85); 
-            backdrop-filter: blur(16px); border-bottom: 1px solid var(--border-color); z-index: 1000; 
-            display: flex; align-items: center; 
+            position: fixed; top: 32px; left: 0; right: 0; height: 75px; 
+            background: rgba(15, 15, 18, 0.7); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color); z-index: 1000; 
+            display: flex; align-items: center; box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
         .header-container { width: 100%; max-width: 1440px; margin: 0 auto; padding: 0 4%; display: flex; justify-content: space-between; align-items: center; }
         
-        .logo-area { display: flex; align-items: center; gap: 10px; font-size: 22px; font-weight: 700; letter-spacing: -0.5px; }
-        .logo-area span { color: var(--primary); }
-        .badge-header { background: rgba(255, 255, 255, 0.06); padding: 3px 10px; border-radius: 8px; font-size: 10px; font-weight: 600; color: var(--text-muted); border: 1px solid rgba(255,255,255,0.05); }
+        .logo-area { display: flex; align-items: center; gap: 10px; font-size: 24px; font-weight: 800; letter-spacing: -0.5px; }
+        .logo-area a { transition: var(--transition-fast); }
+        .logo-area a:hover { opacity: 0.8; }
+        .logo-area span.dot-purple { color: var(--primary); }
+        .badge-header { background: rgba(201, 188, 241, 0.1); padding: 4px 10px; border-radius: 8px; font-size: 10px; font-weight: 700; color: var(--primary); border: 1px solid rgba(201, 188, 241, 0.2); letter-spacing: 0.5px; }
 
-        .nav-links { display: flex; gap: 28px; height: 100%; align-items: center; }
-        .nav-links a { font-size: 14px; font-weight: 500; color: var(--text-muted); position: relative; padding: 26px 0; transition: var(--transition); }
-        .nav-links a::after { content: ''; position: absolute; bottom: -1px; left: 0; width: 0%; height: 2px; background-color: var(--text-main); transition: width 0.3s ease; }
+        .nav-links { display: flex; gap: 32px; height: 100%; align-items: center; }
+        .nav-links a { font-size: 14px; font-weight: 500; color: var(--text-muted); position: relative; padding: 26px 0; transition: var(--transition-fast); }
+        .nav-links a::after { content: ''; position: absolute; bottom: -1px; left: 0; width: 0%; height: 2px; background-color: var(--primary); transition: width 0.3s ease; box-shadow: 0 -2px 10px var(--primary); }
         .nav-links a:hover { color: var(--text-main); }
         .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
         .nav-links a.active { color: var(--text-main); font-weight: 600; }
 
-        .btn-discord { background: #ffffff; color: #000000; padding: 10px 22px; border-radius: 30px; font-size: 13px; font-weight: 600; transition: var(--transition); display: flex; align-items: center; gap: 6px; box-shadow: 0 4px 12px rgba(255,255,255,0.1); }
-        .btn-discord:hover { transform: translateY(-2px); background: var(--primary); box-shadow: 0 6px 20px rgba(201, 188, 241, 0.4); }
+        .btn-discord { background: #ffffff; color: #000000; padding: 10px 24px; border-radius: 30px; font-size: 13px; font-weight: 700; transition: var(--transition-smooth); display: flex; align-items: center; gap: 8px; }
+        .btn-discord:hover { transform: translateY(-2px); background: var(--primary); box-shadow: 0 8px 25px var(--primary-glow); color: #000; }
 
         /* === CONTENU PRINCIPAL === */
-        main { flex: 1; padding-top: 160px; max-width: 1440px; margin: 0 auto; width: 100%; padding-left: 4%; padding-right: 4%; padding-bottom: 80px; }
+        main { flex: 1; padding-top: 170px; max-width: 1440px; margin: 0 auto; width: 100%; padding-left: 4%; padding-right: 4%; padding-bottom: 100px; }
 
         /* === FILTRES === */
-        .filters { display: flex; gap: 12px; margin-bottom: 30px; flex-wrap: wrap; }
-        .filter-btn { background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); color: var(--text-muted); padding: 8px 18px; border-radius: 20px; cursor: pointer; transition: var(--transition); font-size: 13px; font-weight: 500; }
-        .filter-btn:hover { background: rgba(255,255,255,0.1); color: var(--text-main); }
-        .filter-btn.active { background: var(--primary); color: #000; border-color: var(--primary); font-weight: 600; }
+        .filters { display: flex; gap: 12px; margin-bottom: 40px; flex-wrap: wrap; }
+        .filter-btn { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08); color: var(--text-muted); padding: 10px 22px; border-radius: 30px; cursor: pointer; transition: var(--transition-smooth); font-size: 13px; font-weight: 500; letter-spacing: 0.3px; }
+        .filter-btn:hover { background: rgba(255,255,255,0.06); color: var(--text-main); transform: translateY(-2px); }
+        .filter-btn.active { background: var(--primary); color: #000; border-color: var(--primary); font-weight: 600; box-shadow: 0 4px 15px var(--primary-glow); }
 
         /* === GRILLE DE JEUX === */
-        .games-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 24px; }
+        .games-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 28px; }
 
         .game-card { 
             background: var(--bg-card); border-radius: 20px; overflow: hidden; 
-            border: 1px solid var(--border-color); transition: var(--transition);
-            display: flex; flex-direction: column;
+            border: 1px solid var(--border-color); transition: var(--transition-smooth);
+            display: flex; flex-direction: column; position: relative;
+            animation: fadeUp 0.6s cubic-bezier(0.25, 0.8, 0.25, 1) both;
         }
+        
+        /* Staggered animation delays for cards */
+        .game-card:nth-child(1) { animation-delay: 0.05s; }
+        .game-card:nth-child(2) { animation-delay: 0.1s; }
+        .game-card:nth-child(3) { animation-delay: 0.15s; }
+        .game-card:nth-child(4) { animation-delay: 0.2s; }
+        .game-card:nth-child(5) { animation-delay: 0.25s; }
+        .game-card:nth-child(6) { animation-delay: 0.3s; }
+        .game-card:nth-child(7) { animation-delay: 0.35s; }
+        .game-card:nth-child(8) { animation-delay: 0.4s; }
+        .game-card:nth-child(9) { animation-delay: 0.45s; }
+        .game-card:nth-child(10) { animation-delay: 0.5s; }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         .game-card:hover { 
-            transform: translateY(-6px); border-color: rgba(255, 255, 255, 0.12); box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+            transform: translateY(-8px); 
+            border-color: rgba(201, 188, 241, 0.3); 
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 20px var(--primary-glow);
         }
 
         /* Bannière d'illustration & Zoom Effect */
-        .game-banner { width: 100%; height: 190px; position: relative; border-bottom: 1px solid rgba(255,255,255,0.02); overflow: hidden; }
+        .game-banner { width: 100%; height: 200px; position: relative; overflow: hidden; background-color: #1a1a24; }
+        .game-banner::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 60%; background: linear-gradient(to top, var(--bg-card), transparent); z-index: 1; }
+        
         .game-banner-bg {
             position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-            background-size: cover; background-position: center; transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+            background-size: cover; background-position: center; transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+            /* Fallback gradient if image is missing */
+            background-color: #242430; background-image: linear-gradient(45deg, #16161c, #2a2a35);
         }
-        .game-card:hover .game-banner-bg { transform: scale(1.08); }
+        .game-card:hover .game-banner-bg { transform: scale(1.08) rotate(1deg); }
         
         .status-badge { 
-            position: absolute; top: 16px; right: 16px; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(8px);
-            padding: 4px 12px; border-radius: 30px; font-size: 11px; font-weight: 700; letter-spacing: 0.5px;
-            display: flex; align-items: center; gap: 6px; border: 1px solid rgba(255,255,255,0.05); z-index: 2;
+            position: absolute; top: 16px; right: 16px; background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            padding: 6px 14px; border-radius: 30px; font-size: 10px; font-weight: 700; letter-spacing: 0.8px;
+            display: flex; align-items: center; gap: 8px; border: 1px solid rgba(255,255,255,0.08); z-index: 2;
         }
-        .status-badge.online { color: #5ce1a6; }
-        .status-badge.online::before { content: ''; display: inline-block; width: 6px; height: 6px; background: #5ce1a6; border-radius: 50%; box-shadow: 0 0 8px #5ce1a6; }
+        .status-badge.online { color: var(--success); }
+        .status-badge.online::before { 
+            content: ''; display: inline-block; width: 6px; height: 6px; 
+            background: var(--success); border-radius: 50%; box-shadow: 0 0 8px var(--success); 
+            animation: pulseDot 2s infinite;
+        }
+
+        @keyframes pulseDot {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(92, 225, 166, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(92, 225, 166, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(92, 225, 166, 0); }
+        }
 
         /* Infos textuelles */
-        .game-info { padding: 24px; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
-        .game-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
-        .game-info h3 { font-size: 20px; font-weight: 600; letter-spacing: -0.3px; }
+        .game-info { padding: 0 24px 24px 24px; flex: 1; display: flex; flex-direction: column; justify-content: space-between; z-index: 2; position: relative; margin-top: -20px; }
+        .game-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 16px; }
+        .game-info h3 { font-size: 22px; font-weight: 700; letter-spacing: -0.5px; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
         
         /* Badge Joueurs */
         .players-badge {
-            display: inline-flex; align-items: center; gap: 5px; background: rgba(255,255,255,0.04); 
-            padding: 4px 10px; border-radius: 12px; font-size: 11px; color: var(--text-muted); font-weight: 500; border: 1px solid rgba(255,255,255,0.02);
+            display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.05); 
+            padding: 5px 12px; border-radius: 12px; font-size: 11px; color: var(--text-main); font-weight: 600; border: 1px solid rgba(255,255,255,0.05);
         }
+        .players-badge svg { color: var(--primary); }
         
-        .game-info p { color: var(--text-muted); font-size: 13.5px; line-height: 1.5; margin-bottom: 24px; }
+        .game-info p { color: var(--text-muted); font-size: 14px; line-height: 1.6; margin-bottom: 24px; font-weight: 400; }
 
         /* Actions (Boutons) */
-        .card-actions { display: flex; gap: 10px; }
+        .card-actions { display: flex; gap: 12px; }
         .btn-open { 
-            background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.05);
-            color: var(--text-main); padding: 10px 20px; border-radius: 12px; font-size: 13px; 
-            font-weight: 600; display: inline-flex; align-items: center; justify-content: center; gap: 8px; flex: 1; transition: var(--transition);
+            background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-main); padding: 12px 20px; border-radius: 14px; font-size: 13px; 
+            font-weight: 600; display: inline-flex; align-items: center; justify-content: center; gap: 8px; flex: 1; transition: var(--transition-smooth);
         }
-        .game-card:hover .btn-open { background: var(--text-main); color: #000000; }
+        .game-card:hover .btn-open { background: var(--text-main); color: #000; border-color: var(--text-main); }
         
         .btn-copy {
-            background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05);
-            color: var(--text-muted); width: 42px; border-radius: 12px; cursor: pointer; transition: var(--transition);
+            background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.08);
+            color: var(--text-muted); width: 44px; border-radius: 14px; cursor: pointer; transition: var(--transition-smooth);
             display: flex; align-items: center; justify-content: center;
         }
-        .btn-copy:hover { background: rgba(255,255,255,0.1); color: #fff; }
+        .btn-copy:hover { background: rgba(255,255,255,0.1); color: #fff; transform: scale(1.05); }
+
+        /* Effet de masquage fluide pour le filtre JS */
+        .game-card.hidden { display: none; }
+        .game-card.fade-out { opacity: 0; transform: scale(0.95); pointer-events: none; }
 
         /* === RESPONSIVE === */
         @media (max-width: 900px) {
-            .nav-links { display: none; }
-            main { padding-top: 130px; }
+            .nav-links { display: none; } /* On pourrait ajouter un menu burger ici plus tard */
+            main { padding-top: 140px; }
+            .games-grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
         }
     </style>
 </head>
 <body>
 
-    <div class="top-banner"><span class="dot"></span> HDK — VERSION BETA EN COURS DE TEST</div>
+    <div class="top-banner"><span class="dot"></span> HDK — Version Beta en cours de test</div>
 
     <header class="glass-header">
         <div class="header-container">
-            <div class="logo-area"><a href="index.html">HDK<span>.</span></a><span class="badge-header">BETA</span></div>
+            <div class="logo-area">
+                <a href="index.html">HDK<span class="dot-purple">.</span></a>
+                <span class="badge-header">BETA</span>
+            </div>
             <nav class="nav-links">
                 <a href="index.html">Accueil</a>
                 <a href="museum.html">Museum</a>
@@ -143,7 +216,12 @@
                 <a href="news.html">News</a>
                 <a href="contact.html">Contact</a>
             </nav>
-            <a href="#" class="btn-discord">Discord</a>
+            <a href="#" class="btn-discord">
+                <svg width="18" height="18" viewBox="0 0 127.14 96.36" fill="currentColor">
+                    <path d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.79,32.65-1.71,56.6.54,80.21h0A105.73,105.73,0,0,0,32.71,96.36,77.7,77.7,0,0,0,39.6,85.25a68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.71,1.76,1.39,2.66,2a68.68,68.68,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1,105.25,105.25,0,0,0,32.19-16.14h0C129.24,52.84,122.09,29.11,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53s5-12.74,11.43-12.74S54,46,53.89,53,48.84,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.31,60,73.31,53s5-12.74,11.43-12.74S96.16,46,96.06,53,91,65.69,84.69,65.69Z"/>
+                </svg>
+                Discord
+            </a>
         </div>
     </header>
 
@@ -157,7 +235,7 @@
             <button class="filter-btn" onclick="filterGames('action', this)">Action & Party</button>
         </div>
 
-        <div class="games-grid">
+        <div class="games-grid" id="gamesGrid">
             
             <!-- 1. Skribbl (Dessin) -->
             <div class="game-card" data-category="dessin">
@@ -172,8 +250,8 @@
                     </div>
                     <p>Affrontez la communauté dans un jeu de dessin et de devinettes effréné. Qui sera le plus rapide ?</p>
                     <div class="card-actions">
-                        <a href="https://skribbl.io" target="_blank" class="btn-open">Ouvrir &rarr;</a>
-                        <button class="btn-copy" onclick="copyToClipboard('https://skribbl.io', this)" title="Copier le lien"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg></button>
+                        <a href="https://skribbl.io" target="_blank" class="btn-open">Ouvrir le jeu &rarr;</a>
+                        <button class="btn-copy" onclick="copyToClipboard('https://skribbl.io', this)" title="Copier le lien"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg></button>
                     </div>
                 </div>
             </div>
@@ -191,8 +269,8 @@
                     </div>
                     <p>Le jeu du téléphone arabe revisité en dessins. Attendez-vous à des quiproquos légendaires !</p>
                     <div class="card-actions">
-                        <a href="https://garticphone.com/fr" target="_blank" class="btn-open">Ouvrir &rarr;</a>
-                        <button class="btn-copy" onclick="copyToClipboard('https://garticphone.com/fr', this)" title="Copier le lien"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg></button>
+                        <a href="https://garticphone.com/fr" target="_blank" class="btn-open">Ouvrir le jeu &rarr;</a>
+                        <button class="btn-copy" onclick="copyToClipboard('https://garticphone.com/fr', this)" title="Copier le lien"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg></button>
                     </div>
                 </div>
             </div>
@@ -210,8 +288,8 @@
                     </div>
                     <p>Faites deviner vos mots secrets à votre équipe à l'aide d'un seul indice, tout en évitant l'assassin.</p>
                     <div class="card-actions">
-                        <a href="https://codenames.game/fr" target="_blank" class="btn-open">Ouvrir &rarr;</a>
-                        <button class="btn-copy" onclick="copyToClipboard('https://codenames.game/fr', this)" title="Copier le lien"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg></button>
+                        <a href="https://codenames.game/fr" target="_blank" class="btn-open">Ouvrir le jeu &rarr;</a>
+                        <button class="btn-copy" onclick="copyToClipboard('https://codenames.game/fr', this)" title="Copier le lien"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg></button>
                     </div>
                 </div>
             </div>
@@ -229,8 +307,8 @@
                     </div>
                     <p>Explorez le monde et devinez où vous avez été parachuté. Parfait pour tester la géographie du chat.</p>
                     <div class="card-actions">
-                        <a href="https://www.geoguessr.com" target="_blank" class="btn-open">Ouvrir &rarr;</a>
-                        <button class="btn-copy" onclick="copyToClipboard('https://www.geoguessr.com', this)" title="Copier le lien"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg></button>
+                        <a href="https://www.geoguessr.com" target="_blank" class="btn-open">Ouvrir le jeu &rarr;</a>
+                        <button class="btn-copy" onclick="copyToClipboard('https://www.geoguessr.com', this)" title="Copier le lien"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg></button>
                     </div>
                 </div>
             </div>
@@ -266,8 +344,8 @@
                     </div>
                     <p>Un jeu d'ambiance et de déduction sociale. Trouvez qui cache son identité secrète parmi les civils.</p>
                     <div class="card-actions">
-                        <a href="https://www.yanstarstudio.com/" target="_blank" class="btn-open">Ouvrir &rarr;</a>
-                        <button class="btn-copy" onclick="copyToClipboard('https://www.yanstarstudio.com/', this)" title="Copier le lien"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg></button>
+                        <a href="https://www.yanstarstudio.com/" target="_blank" class="btn-open">Ouvrir le jeu &rarr;</a>
+                        <button class="btn-copy" onclick="copyToClipboard('https://www.yanstarstudio.com/', this)" title="Copier le lien"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg></button>
                     </div>
                 </div>
             </div>
@@ -285,8 +363,8 @@
                     </div>
                     <p>Trouvez un mot contenant la syllabe imposée avant que la bombe n'explose entre vos mains !</p>
                     <div class="card-actions">
-                        <a href="https://jklm.fun" target="_blank" class="btn-open">Ouvrir &rarr;</a>
-                        <button class="btn-copy" onclick="copyToClipboard('https://jklm.fun', this)" title="Copier le lien"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg></button>
+                        <a href="https://jklm.fun" target="_blank" class="btn-open">Ouvrir le jeu &rarr;</a>
+                        <button class="btn-copy" onclick="copyToClipboard('https://jklm.fun', this)" title="Copier le lien"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg></button>
                     </div>
                 </div>
             </div>
@@ -304,8 +382,8 @@
                     </div>
                     <p>Testez votre culture populaire générale et soyez le premier à identifier les images ou citations.</p>
                     <div class="card-actions">
-                        <a href="https://jklm.fun" target="_blank" class="btn-open">Ouvrir &rarr;</a>
-                        <button class="btn-copy" onclick="copyToClipboard('https://jklm.fun', this)" title="Copier le lien"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg></button>
+                        <a href="https://jklm.fun" target="_blank" class="btn-open">Ouvrir le jeu &rarr;</a>
+                        <button class="btn-copy" onclick="copyToClipboard('https://jklm.fun', this)" title="Copier le lien"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg></button>
                     </div>
                 </div>
             </div>
@@ -323,8 +401,8 @@
                     </div>
                     <p>Remplissez vos catégories le plus vite possible avec la lettre imposée. Attention aux réponses farfelues !</p>
                     <div class="card-actions">
-                        <a href="https://petitbac.net/" target="_blank" class="btn-open">Ouvrir &rarr;</a>
-                        <button class="btn-copy" onclick="copyToClipboard('https://petitbac.net/', this)" title="Copier le lien"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg></button>
+                        <a href="https://petitbac.net/" target="_blank" class="btn-open">Ouvrir le jeu &rarr;</a>
+                        <button class="btn-copy" onclick="copyToClipboard('https://petitbac.net/', this)" title="Copier le lien"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg></button>
                     </div>
                 </div>
             </div>
@@ -352,31 +430,47 @@
 
     <!-- SCRIPT POUR LES FILTRES ET LE BOUTON COPIER -->
     <script>
-        // Fonction pour filtrer les jeux
+        // Fonction pour filtrer les jeux avec animation douce
         function filterGames(category, btnElement) {
             // Change l'apparence du bouton actif
             document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
             btnElement.classList.add('active');
             
-            // Affiche ou cache les cartes
             const cards = document.querySelectorAll('.game-card');
+            
+            // Première étape : faire disparaître les cartes non correspondantes
             cards.forEach(card => {
-                if (category === 'all' || card.getAttribute('data-category') === category) {
-                    card.style.display = 'flex';
+                if (category !== 'all' && card.getAttribute('data-category') !== category) {
+                    card.classList.add('fade-out');
+                    setTimeout(() => {
+                        card.classList.add('hidden');
+                    }, 300); // Temps de la transition
                 } else {
-                    card.style.display = 'none';
+                    card.classList.remove('hidden');
+                    // Petit délai pour l'effet d'apparition
+                    setTimeout(() => {
+                        card.classList.remove('fade-out');
+                    }, 10);
                 }
             });
         }
 
-        // Fonction pour copier le lien et afficher un mini feedback
+        // Fonction pour copier le lien et afficher un feedback visuel premium
         function copyToClipboard(url, btnElement) {
             navigator.clipboard.writeText(url).then(() => {
-                const originalIcon = btnElement.innerHTML;
-                btnElement.innerHTML = '✅';
+                const originalHTML = btnElement.innerHTML;
+                // Remplace par une icône check et change la couleur
+                btnElement.innerHTML = `<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path></svg>`;
+                btnElement.style.color = "var(--success)";
+                btnElement.style.borderColor = "var(--success)";
+                
                 setTimeout(() => {
-                    btnElement.innerHTML = originalIcon;
+                    btnElement.innerHTML = originalHTML;
+                    btnElement.style.color = "";
+                    btnElement.style.borderColor = "";
                 }, 2000);
+            }).catch(err => {
+                console.error('Erreur lors de la copie : ', err);
             });
         }
     </script>
