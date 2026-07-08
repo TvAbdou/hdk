@@ -4,22 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#0f0f12">
-    <title>HDK - Animations</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>HDK - Animations (Ultime)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        /* === CONFIGURATION COMMUNE & THÈME SOMBRE === */
+        /* === CONFIGURATION & THÈME SOMBRE === */
         :root {
             --primary: #C9BCF1;
-            --primary-glow: rgba(201, 188, 241, 0.15);
+            --primary-glow: rgba(201, 188, 241, 0.4);
             --secondary: #B9E2CE;
+            --accent: #ff758f;
             --success: #5ce1a6;
-            --bg-dark: #0f0f12;
-            --bg-card: #16161c;
+            --bg-dark: #09090b;
+            --bg-card: #121217;
+            --bg-glass: rgba(18, 18, 23, 0.6);
             --text-main: #ffffff;
-            --text-muted: #8e8e9a;
-            --border-color: rgba(255, 255, 255, 0.05);
+            --text-muted: #a1a1aa;
+            --border-color: rgba(255, 255, 255, 0.08);
             --transition-fast: all 0.2s ease;
-            --transition-smooth: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
@@ -38,41 +40,49 @@
         /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: var(--bg-dark); }
-        ::-webkit-scrollbar-thumb { background: #2a2a35; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: #272732; border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
+
+        /* === FOND ANIMÉ DISCRET === */
+        .animated-bg {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1;
+            overflow: hidden; pointer-events: none;
+            background: radial-gradient(circle at top left, rgba(201,188,241,0.03), transparent 40%),
+                        radial-gradient(circle at bottom right, rgba(185,226,206,0.03), transparent 40%);
+        }
+        .orb {
+            position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.4;
+            animation: float 20s infinite ease-in-out alternate;
+        }
+        .orb-1 { width: 400px; height: 400px; background: rgba(201, 188, 241, 0.15); top: -100px; left: -100px; }
+        .orb-2 { width: 500px; height: 500px; background: rgba(185, 226, 206, 0.1); bottom: -200px; right: -100px; animation-delay: -5s; }
+        .orb-3 { width: 300px; height: 300px; background: rgba(255, 117, 143, 0.08); top: 40%; left: 50%; animation-duration: 25s; }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(50px, 80px) scale(1.2); }
+        }
 
         /* === BANNIÈRE DE TEST SUPÉRIEURE === */
         .top-banner { 
             background: linear-gradient(90deg, #000 0%, #0a0a0d 50%, #000 100%);
-            color: #a0a0ab; text-align: center; font-size: 11px; padding: 8px 0; 
+            color: #a1a1aa; text-align: center; font-size: 11px; padding: 8px 0; 
             letter-spacing: 2px; font-weight: 600; position: fixed; top: 0; width: 100%; z-index: 1001; 
-            text-transform: uppercase; border-bottom: 1px solid rgba(255, 255, 255, 0.03);
-        }
-        .top-banner .dot { 
-            display: inline-block; width: 6px; height: 6px; background-color: var(--secondary); 
-            border-radius: 50%; margin-right: 8px; box-shadow: 0 0 10px var(--secondary); vertical-align: middle;
-            animation: pulseBanner 2s infinite alternate;
-        }
-
-        @keyframes pulseBanner {
-            0% { box-shadow: 0 0 5px var(--secondary), 0 0 10px var(--secondary); transform: scale(0.9); }
-            100% { box-shadow: 0 0 10px var(--secondary), 0 0 20px var(--secondary); transform: scale(1.1); }
+            text-transform: uppercase; border-bottom: 1px solid var(--border-color);
         }
 
         /* === HEADER FIXE NAVIGATION === */
         .glass-header { 
             position: fixed; top: 32px; left: 0; right: 0; height: 75px; 
-            background: rgba(15, 15, 18, 0.7); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            background: rgba(9, 9, 11, 0.7); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
             border-bottom: 1px solid var(--border-color); z-index: 1000; 
-            display: flex; align-items: center; box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            display: flex; align-items: center; box-shadow: 0 10px 40px rgba(0,0,0,0.5);
         }
         .header-container { width: 100%; max-width: 1440px; margin: 0 auto; padding: 0 4%; display: flex; justify-content: space-between; align-items: center; }
         
         .logo-area { display: flex; align-items: center; gap: 10px; font-size: 24px; font-weight: 800; letter-spacing: -0.5px; }
-        .logo-area a { transition: var(--transition-fast); }
-        .logo-area a:hover { opacity: 0.8; }
-        .logo-area span.dot-purple { color: var(--primary); }
-        .badge-header { background: rgba(201, 188, 241, 0.1); padding: 4px 10px; border-radius: 8px; font-size: 10px; font-weight: 700; color: var(--primary); border: 1px solid rgba(201, 188, 241, 0.2); letter-spacing: 0.5px; }
+        .logo-area span.dot-purple { color: var(--primary); text-shadow: 0 0 15px var(--primary-glow); }
+        .badge-header { background: rgba(201, 188, 241, 0.1); padding: 4px 10px; border-radius: 8px; font-size: 10px; font-weight: 700; color: var(--primary); border: 1px solid rgba(201, 188, 241, 0.2); }
 
         .nav-links { display: flex; gap: 32px; height: 100%; align-items: center; }
         .nav-links a { font-size: 14px; font-weight: 500; color: var(--text-muted); position: relative; padding: 26px 0; transition: var(--transition-fast); }
@@ -81,126 +91,162 @@
         .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
         .nav-links a.active { color: var(--text-main); font-weight: 600; }
 
-        .btn-discord { background: #ffffff; color: #000000; padding: 10px 24px; border-radius: 30px; font-size: 13px; font-weight: 700; transition: var(--transition-smooth); display: flex; align-items: center; gap: 8px; }
-        .btn-discord:hover { transform: translateY(-2px); background: var(--primary); box-shadow: 0 8px 25px var(--primary-glow); color: #000; }
+        .btn-discord { background: #fff; color: #000; padding: 10px 24px; border-radius: 30px; font-size: 13px; font-weight: 700; transition: var(--transition-smooth); display: flex; align-items: center; gap: 8px; }
+        .btn-discord:hover { transform: translateY(-2px); background: var(--primary); box-shadow: 0 8px 25px var(--primary-glow); }
 
         /* === CONTENU PRINCIPAL === */
-        main { flex: 1; padding-top: 170px; max-width: 1440px; margin: 0 auto; width: 100%; padding-left: 4%; padding-right: 4%; padding-bottom: 100px; }
+        main { flex: 1; padding-top: 150px; max-width: 1440px; margin: 0 auto; width: 100%; padding-left: 4%; padding-right: 4%; padding-bottom: 100px; }
+
+        /* HEADER SECTION (Recherche & Aléatoire) */
+        .controls-header {
+            display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 30px; flex-wrap: wrap; gap: 20px;
+        }
+        .page-title h1 { font-size: 38px; font-weight: 800; letter-spacing: -1px; margin-bottom: 8px; background: linear-gradient(to right, #fff, var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .page-title p { color: var(--text-muted); font-size: 15px; }
+
+        .tools { display: flex; gap: 16px; flex-wrap: wrap; }
+        
+        .search-box {
+            position: relative; background: var(--bg-glass); border: 1px solid var(--border-color); border-radius: 16px;
+            display: flex; align-items: center; padding: 0 16px; width: 300px; transition: var(--transition-smooth);
+            backdrop-filter: blur(10px);
+        }
+        .search-box:focus-within { border-color: var(--primary); box-shadow: 0 0 20px rgba(201, 188, 241, 0.15); width: 340px; }
+        .search-box input { background: transparent; border: none; color: #fff; padding: 14px 10px; width: 100%; outline: none; font-size: 14px; }
+        .search-box input::placeholder { color: #666; }
+        .search-box svg { color: var(--text-muted); }
+
+        .btn-random {
+            background: linear-gradient(135deg, #4b3e8a, var(--primary)); color: #fff; padding: 0 24px; border: none; border-radius: 16px;
+            font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; cursor: pointer; transition: var(--transition-smooth);
+            box-shadow: 0 4px 15px rgba(201, 188, 241, 0.2);
+        }
+        .btn-random:hover { transform: translateY(-2px) scale(1.02); box-shadow: 0 8px 25px rgba(201, 188, 241, 0.4); }
+        .btn-random svg { transition: transform 0.3s; }
+        .btn-random:hover svg { transform: rotate(180deg); }
 
         /* === FILTRES === */
-        .filters { display: flex; gap: 12px; margin-bottom: 40px; flex-wrap: wrap; }
-        .filter-btn { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08); color: var(--text-muted); padding: 10px 22px; border-radius: 30px; cursor: pointer; transition: var(--transition-smooth); font-size: 13px; font-weight: 500; letter-spacing: 0.3px; }
-        .filter-btn:hover { background: rgba(255,255,255,0.06); color: var(--text-main); transform: translateY(-2px); }
-        .filter-btn.active { background: var(--primary); color: #000; border-color: var(--primary); font-weight: 600; box-shadow: 0 4px 15px var(--primary-glow); }
+        .filters { display: flex; gap: 12px; margin-bottom: 40px; flex-wrap: wrap; border-bottom: 1px solid var(--border-color); padding-bottom: 20px; }
+        .filter-btn { background: transparent; border: 1px solid transparent; color: var(--text-muted); padding: 8px 18px; border-radius: 30px; cursor: pointer; transition: var(--transition-smooth); font-size: 14px; font-weight: 500; }
+        .filter-btn:hover { background: rgba(255,255,255,0.05); color: var(--text-main); }
+        .filter-btn.active { background: rgba(201, 188, 241, 0.1); color: var(--primary); border-color: rgba(201, 188, 241, 0.3); font-weight: 600; }
+        
+        .filter-btn.fav-filter { display: flex; align-items: center; gap: 6px; color: #ffd166; }
+        .filter-btn.fav-filter.active { background: rgba(255, 209, 102, 0.1); border-color: rgba(255, 209, 102, 0.3); }
+
+        /* SECTION POPULAIRES */
+        .section-title { font-size: 20px; font-weight: 700; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+        .section-title svg { color: #ffd166; }
 
         /* === GRILLE DE JEUX === */
-        .games-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 28px; }
+        .games-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px; margin-bottom: 50px; }
 
+        /* CARD DESIGN (Effet Néon) */
         .game-card { 
             background: var(--bg-card); border-radius: 20px; overflow: hidden; 
             border: 1px solid var(--border-color); transition: var(--transition-smooth);
             display: flex; flex-direction: column; position: relative;
-            animation: fadeUp 0.6s cubic-bezier(0.25, 0.8, 0.25, 1) both;
+            animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+            transform-style: preserve-3d;
         }
         
-        /* Staggered animation delays for cards */
-        .game-card:nth-child(1) { animation-delay: 0.05s; }
-        .game-card:nth-child(2) { animation-delay: 0.1s; }
-        .game-card:nth-child(3) { animation-delay: 0.15s; }
-        .game-card:nth-child(4) { animation-delay: 0.2s; }
-        .game-card:nth-child(5) { animation-delay: 0.25s; }
-        .game-card:nth-child(6) { animation-delay: 0.3s; }
-        .game-card:nth-child(7) { animation-delay: 0.35s; }
-        .game-card:nth-child(8) { animation-delay: 0.4s; }
-        .game-card:nth-child(9) { animation-delay: 0.45s; }
-        .game-card:nth-child(10) { animation-delay: 0.5s; }
-
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
+        /* Lumière sous la carte */
+        .game-card::before {
+            content: ""; position: absolute; inset: -1px; border-radius: 20px;
+            background: linear-gradient(45deg, transparent, var(--primary), transparent);
+            opacity: 0; transition: opacity 0.4s; z-index: -1;
         }
+        
+        .game-card:hover { transform: translateY(-8px); border-color: transparent; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8); }
+        .game-card:hover::before { opacity: 1; }
 
-        .game-card:hover { 
-            transform: translateY(-8px); 
-            border-color: rgba(201, 188, 241, 0.3); 
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 20px var(--primary-glow);
-        }
+        /* Animation class for highlights */
+        .game-card.highlight { animation: pulseHighlight 1s ease 2; border-color: var(--primary); box-shadow: 0 0 30px var(--primary-glow); }
+        @keyframes pulseHighlight { 0% { transform: scale(1); } 50% { transform: scale(1.03); } 100% { transform: scale(1); } }
 
-        /* Bannière d'illustration & Zoom Effect */
-        .game-banner { width: 100%; height: 200px; position: relative; overflow: hidden; background-color: #1a1a24; }
-        .game-banner::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 60%; background: linear-gradient(to top, var(--bg-card), transparent); z-index: 1; }
+        /* Bannière & Tags */
+        .game-banner { width: 100%; height: 210px; position: relative; overflow: hidden; background-color: #1a1a24; }
+        .game-banner::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 70%; background: linear-gradient(to top, var(--bg-card) 0%, transparent 100%); z-index: 1; }
         
         .game-banner-bg {
             position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-            background-size: cover; background-position: center; transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
-            /* Fallback gradient if image is missing */
-            background-color: #242430; background-image: linear-gradient(45deg, #16161c, #2a2a35);
+            background-size: cover; background-position: center; transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .game-card:hover .game-banner-bg { transform: scale(1.08) rotate(1deg); }
+        .game-card:hover .game-banner-bg { transform: scale(1.1) rotate(1.5deg); }
         
-        .status-badge { 
-            position: absolute; top: 16px; right: 16px; background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-            padding: 6px 14px; border-radius: 30px; font-size: 10px; font-weight: 700; letter-spacing: 0.8px;
-            display: flex; align-items: center; gap: 8px; border: 1px solid rgba(255,255,255,0.08); z-index: 2;
+        /* Badges absolus (Top Left / Right) */
+        .badge-container { position: absolute; top: 16px; left: 16px; z-index: 2; display: flex; flex-wrap: wrap; gap: 8px; }
+        .game-badge { padding: 4px 10px; border-radius: 8px; font-size: 10px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; backdrop-filter: blur(10px); }
+        .bg-free { background: rgba(92, 225, 166, 0.2); color: var(--success); border: 1px solid rgba(92, 225, 166, 0.3); }
+        .bg-multi { background: rgba(201, 188, 241, 0.2); color: var(--primary); border: 1px solid rgba(201, 188, 241, 0.3); }
+        .bg-fr { background: rgba(255, 255, 255, 0.1); color: #fff; border: 1px solid rgba(255, 255, 255, 0.2); }
+        
+        .btn-fav {
+            position: absolute; top: 16px; right: 16px; z-index: 2;
+            background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(10px);
+            width: 34px; height: 34px; border-radius: 50%; display: flex; justify-content: center; align-items: center;
+            cursor: pointer; transition: var(--transition-fast); color: rgba(255,255,255,0.4);
         }
-        .status-badge.online { color: var(--success); }
-        .status-badge.online::before { 
-            content: ''; display: inline-block; width: 6px; height: 6px; 
-            background: var(--success); border-radius: 50%; box-shadow: 0 0 8px var(--success); 
-            animation: pulseDot 2s infinite;
-        }
-
-        @keyframes pulseDot {
-            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(92, 225, 166, 0.7); }
-            70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(92, 225, 166, 0); }
-            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(92, 225, 166, 0); }
-        }
+        .btn-fav:hover { background: rgba(0,0,0,0.8); color: #fff; transform: scale(1.1); }
+        .btn-fav.is-fav { color: #ffd166; border-color: rgba(255, 209, 102, 0.4); text-shadow: 0 0 10px rgba(255, 209, 102, 0.8); }
 
         /* Infos textuelles */
-        .game-info { padding: 0 24px 24px 24px; flex: 1; display: flex; flex-direction: column; justify-content: space-between; z-index: 2; position: relative; margin-top: -20px; }
-        .game-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 16px; }
-        .game-info h3 { font-size: 22px; font-weight: 700; letter-spacing: -0.5px; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+        .game-info { padding: 0 24px 24px 24px; flex: 1; display: flex; flex-direction: column; justify-content: space-between; z-index: 2; position: relative; margin-top: -25px; }
+        .game-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 12px; }
+        .game-info h3 { font-size: 22px; font-weight: 700; letter-spacing: -0.5px; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
         
-        /* Badge Joueurs */
-        .players-badge {
-            display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.05); 
-            padding: 5px 12px; border-radius: 12px; font-size: 11px; color: var(--text-main); font-weight: 600; border: 1px solid rgba(255,255,255,0.05);
-        }
+        .players-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-main); font-weight: 600; opacity: 0.9; }
         .players-badge svg { color: var(--primary); }
         
-        .game-info p { color: var(--text-muted); font-size: 14px; line-height: 1.6; margin-bottom: 24px; font-weight: 400; }
+        .game-info p { color: var(--text-muted); font-size: 14px; line-height: 1.6; margin-bottom: 24px; font-weight: 400; flex: 1; }
 
-        /* Actions (Boutons) */
+        /* Actions */
         .card-actions { display: flex; gap: 12px; }
         .btn-open { 
-            background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);
             color: var(--text-main); padding: 12px 20px; border-radius: 14px; font-size: 13px; 
             font-weight: 600; display: inline-flex; align-items: center; justify-content: center; gap: 8px; flex: 1; transition: var(--transition-smooth);
         }
         .game-card:hover .btn-open { background: var(--text-main); color: #000; border-color: var(--text-main); }
         
         .btn-copy {
-            background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1);
             color: var(--text-muted); width: 44px; border-radius: 14px; cursor: pointer; transition: var(--transition-smooth);
             display: flex; align-items: center; justify-content: center;
         }
         .btn-copy:hover { background: rgba(255,255,255,0.1); color: #fff; transform: scale(1.05); }
 
-        /* Effet de masquage fluide pour le filtre JS */
+        /* Effet Masquage JS */
         .game-card.hidden { display: none; }
         .game-card.fade-out { opacity: 0; transform: scale(0.95); pointer-events: none; }
 
         /* === RESPONSIVE === */
+        .burger-menu { display: none; background: transparent; border: none; color: #fff; font-size: 24px; cursor: pointer; }
         @media (max-width: 900px) {
-            .nav-links { display: none; } /* On pourrait ajouter un menu burger ici plus tard */
-            main { padding-top: 140px; }
+            .nav-links, .btn-discord { display: none; }
+            .burger-menu { display: block; }
+            main { padding-top: 130px; }
+            .controls-header { flex-direction: column; align-items: flex-start; }
+            .tools, .search-box { width: 100%; }
             .games-grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
         }
+
+        /* Delays */
+        .game-card:nth-child(1) { animation-delay: 0.05s; } .game-card:nth-child(2) { animation-delay: 0.1s; }
+        .game-card:nth-child(3) { animation-delay: 0.15s; } .game-card:nth-child(4) { animation-delay: 0.2s; }
+        .game-card:nth-child(5) { animation-delay: 0.25s; } .game-card:nth-child(6) { animation-delay: 0.3s; }
     </style>
 </head>
 <body>
 
-    <div class="top-banner"><span class="dot"></span> HDK — Version Beta en cours de test</div>
+    <!-- FOND ANIMÉ -->
+    <div class="animated-bg">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <div class="top-banner">HDK — Version Beta en cours de test</div>
 
     <header class="glass-header">
         <div class="header-container">
@@ -214,213 +260,187 @@
                 <a href="animation.html" class="active">Animations</a>
                 <a href="projets.html">Projets</a>
                 <a href="news.html">News</a>
-                <a href="contact.html">Contact</a>
             </nav>
-            <a href="#" class="btn-discord">
-                <svg width="18" height="18" viewBox="0 0 127.14 96.36" fill="currentColor">
-                    <path d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.79,32.65-1.71,56.6.54,80.21h0A105.73,105.73,0,0,0,32.71,96.36,77.7,77.7,0,0,0,39.6,85.25a68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.71,1.76,1.39,2.66,2a68.68,68.68,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1,105.25,105.25,0,0,0,32.19-16.14h0C129.24,52.84,122.09,29.11,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53s5-12.74,11.43-12.74S54,46,53.89,53,48.84,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.31,60,73.31,53s5-12.74,11.43-12.74S96.16,46,96.06,53,91,65.69,84.69,65.69Z"/>
-                </svg>
-                Discord
-            </a>
+            <a href="#" class="btn-discord">Discord</a>
+            <button class="burger-menu">☰</button>
         </div>
     </header>
 
     <main>
-        <!-- Filtres -->
-        <div class="filters">
-            <button class="filter-btn active" onclick="filterGames('all', this)">Tous les jeux</button>
-            <button class="filter-btn" onclick="filterGames('dessin', this)">Dessin</button>
-            <button class="filter-btn" onclick="filterGames('reflexion', this)">Réflexion & Mots</button>
-            <button class="filter-btn" onclick="filterGames('culture', this)">Culture G</button>
-            <button class="filter-btn" onclick="filterGames('action', this)">Action & Party</button>
+        <!-- Header Section -->
+        <div class="controls-header">
+            <div class="page-title">
+                <h1>Hub d'Animations</h1>
+                <p>Découvrez, jouez et animez vos soirées avec notre sélection.</p>
+            </div>
+            <div class="tools">
+                <div class="search-box">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    <input type="text" id="searchInput" placeholder="Rechercher un jeu..." onkeyup="searchGames()">
+                </div>
+                <button class="btn-random" onclick="pickRandomGame()">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                    Jeu Aléatoire
+                </button>
+            </div>
         </div>
 
+        <!-- Filtres -->
+        <div class="filters">
+            <button class="filter-btn active" data-filter="all">Tous</button>
+            <button class="filter-btn fav-filter" data-filter="fav">⭐ Favoris</button>
+            <button class="filter-btn" data-filter="dessin">Dessin</button>
+            <button class="filter-btn" data-filter="reflexion">Réflexion & Mots</button>
+            <button class="filter-btn" data-filter="culture">Culture G</button>
+            <button class="filter-btn" data-filter="action">Action & Party</button>
+        </div>
+
+        <h2 class="section-title" id="gridTitle"><svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg> Tous les jeux</h2>
+
+        <!-- GRILLE -->
         <div class="games-grid" id="gamesGrid">
             
-            <!-- 1. Skribbl (Dessin) -->
-            <div class="game-card" data-category="dessin">
+            <!-- 1. Skribbl -->
+            <div class="game-card popular" data-category="dessin" data-id="skribbl">
                 <div class="game-banner">
-                    <div class="game-banner-bg" style="background-image: url('skribbl.png');"></div>
-                    <span class="status-badge online">EN LIGNE</span>
+                    <div class="badge-container">
+                        <span class="game-badge bg-free">Gratuit</span>
+                        <span class="game-badge bg-fr">FR</span>
+                        <span class="game-badge bg-multi">Top Joué 🔥</span>
+                    </div>
+                    <button class="btn-fav" onclick="toggleFav(this, 'skribbl')"><svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></button>
+                    <div class="game-banner-bg" style="background-image: url('skribbl.png'); background-color:#2a2a35;"></div>
                 </div>
                 <div class="game-info">
                     <div class="game-header">
-                        <h3>Skribbl.io</h3>
-                        <div class="players-badge"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg> 2-12</div>
+                        <h3 class="game-title">Skribbl.io</h3>
+                        <div class="players-badge"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"></path></svg> 2-12</div>
                     </div>
                     <p>Affrontez la communauté dans un jeu de dessin et de devinettes effréné. Qui sera le plus rapide ?</p>
                     <div class="card-actions">
-                        <a href="https://skribbl.io" target="_blank" class="btn-open">Ouvrir le jeu &rarr;</a>
-                        <button class="btn-copy" onclick="copyToClipboard('https://skribbl.io', this)" title="Copier le lien"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg></button>
+                        <a href="https://skribbl.io" target="_blank" class="btn-open">Jouer maintenant</a>
+                        <button class="btn-copy" onclick="copyLink('https://skribbl.io', this)"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg></button>
                     </div>
                 </div>
             </div>
 
-            <!-- 2. Gartic (Dessin) -->
-            <div class="game-card" data-category="dessin">
+            <!-- 2. Gartic -->
+            <div class="game-card popular" data-category="dessin" data-id="gartic">
                 <div class="game-banner">
-                    <div class="game-banner-bg" style="background-image: url('gartic.png');"></div>
-                    <span class="status-badge online">EN LIGNE</span>
+                    <div class="badge-container">
+                        <span class="game-badge bg-free">Gratuit</span>
+                        <span class="game-badge bg-multi">Vocal Requis</span>
+                    </div>
+                    <button class="btn-fav" onclick="toggleFav(this, 'gartic')"><svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></button>
+                    <div class="game-banner-bg" style="background-image: url('gartic.png'); background-color:#2a2a35;"></div>
                 </div>
                 <div class="game-info">
                     <div class="game-header">
-                        <h3>Gartic Phone</h3>
-                        <div class="players-badge"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg> 4-14+</div>
+                        <h3 class="game-title">Gartic Phone</h3>
+                        <div class="players-badge"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"></path></svg> 4-14+</div>
                     </div>
-                    <p>Le jeu du téléphone arabe revisité en dessins. Attendez-vous à des quiproquos légendaires !</p>
+                    <p>Le jeu du téléphone arabe revisité en dessins. Quiproquos légendaires garantis !</p>
                     <div class="card-actions">
-                        <a href="https://garticphone.com/fr" target="_blank" class="btn-open">Ouvrir le jeu &rarr;</a>
-                        <button class="btn-copy" onclick="copyToClipboard('https://garticphone.com/fr', this)" title="Copier le lien"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg></button>
+                        <a href="https://garticphone.com/fr" target="_blank" class="btn-open">Jouer maintenant</a>
+                        <button class="btn-copy" onclick="copyLink('https://garticphone.com/fr', this)"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg></button>
                     </div>
                 </div>
             </div>
 
-            <!-- 3. Codenames (Réflexion) -->
-            <div class="game-card" data-category="reflexion">
+            <!-- 3. Codenames -->
+            <div class="game-card" data-category="reflexion" data-id="codenames">
                 <div class="game-banner">
-                    <div class="game-banner-bg" style="background-image: url('codenames.png');"></div>
-                    <span class="status-badge online">EN LIGNE</span>
+                    <div class="badge-container"><span class="game-badge bg-free">Gratuit</span></div>
+                    <button class="btn-fav" onclick="toggleFav(this, 'codenames')"><svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></button>
+                    <div class="game-banner-bg" style="background-image: url('codenames.png'); background-color:#2a2a35;"></div>
                 </div>
                 <div class="game-info">
                     <div class="game-header">
-                        <h3>Codenames</h3>
-                        <div class="players-badge"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg> 4-8+</div>
+                        <h3 class="game-title">Codenames</h3>
+                        <div class="players-badge"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"></path></svg> 4-8+</div>
                     </div>
-                    <p>Faites deviner vos mots secrets à votre équipe à l'aide d'un seul indice, tout en évitant l'assassin.</p>
+                    <p>Faites deviner vos mots secrets à votre équipe à l'aide d'un seul indice.</p>
                     <div class="card-actions">
-                        <a href="https://codenames.game/fr" target="_blank" class="btn-open">Ouvrir le jeu &rarr;</a>
-                        <button class="btn-copy" onclick="copyToClipboard('https://codenames.game/fr', this)" title="Copier le lien"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg></button>
+                        <a href="https://codenames.game/fr" target="_blank" class="btn-open">Jouer maintenant</a>
+                        <button class="btn-copy" onclick="copyLink('https://codenames.game/fr', this)"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg></button>
                     </div>
                 </div>
             </div>
 
-            <!-- 4. Geoguessr (Culture) -->
-            <div class="game-card" data-category="culture">
+            <!-- 4. GeoGuessr -->
+            <div class="game-card popular" data-category="culture" data-id="geoguessr">
                 <div class="game-banner">
-                    <div class="game-banner-bg" style="background-image: url('geoguessr.png');"></div>
-                    <span class="status-badge online">EN LIGNE</span>
+                    <div class="badge-container"><span class="game-badge" style="background: rgba(255, 117, 143, 0.2); color: #ff758f; border: 1px solid rgba(255, 117, 143, 0.3);">Freemium</span></div>
+                    <button class="btn-fav" onclick="toggleFav(this, 'geoguessr')"><svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></button>
+                    <div class="game-banner-bg" style="background-image: url('geoguessr.png'); background-color:#2a2a35;"></div>
                 </div>
                 <div class="game-info">
                     <div class="game-header">
-                        <h3>GeoGuessr</h3>
-                        <div class="players-badge"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg> Solo / Multi</div>
+                        <h3 class="game-title">GeoGuessr</h3>
+                        <div class="players-badge"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"></path></svg> 1+</div>
                     </div>
-                    <p>Explorez le monde et devinez où vous avez été parachuté. Parfait pour tester la géographie du chat.</p>
+                    <p>Explorez le monde et devinez où vous avez été parachuté sur Google Maps.</p>
                     <div class="card-actions">
-                        <a href="https://www.geoguessr.com" target="_blank" class="btn-open">Ouvrir le jeu &rarr;</a>
-                        <button class="btn-copy" onclick="copyToClipboard('https://www.geoguessr.com', this)" title="Copier le lien"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg></button>
+                        <a href="https://www.geoguessr.com" target="_blank" class="btn-open">Jouer maintenant</a>
+                        <button class="btn-copy" onclick="copyLink('https://www.geoguessr.com', this)"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg></button>
                     </div>
                 </div>
             </div>
 
-            <!-- 5. Among Us (Action) -->
-            <div class="game-card" data-category="action">
+            <!-- 5. Among Us -->
+            <div class="game-card" data-category="action" data-id="amongus">
                 <div class="game-banner">
-                    <div class="game-banner-bg" style="background-image: url('amongus.png');"></div>
-                    <span class="status-badge online">EN LIGNE</span>
+                    <div class="badge-container"><span class="game-badge bg-multi">PC / Mobile</span></div>
+                    <button class="btn-fav" onclick="toggleFav(this, 'amongus')"><svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></button>
+                    <div class="game-banner-bg" style="background-image: url('amongus.png'); background-color:#2a2a35;"></div>
                 </div>
                 <div class="game-info">
                     <div class="game-header">
-                        <h3>Among Us</h3>
-                        <div class="players-badge"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg> 4-15</div>
+                        <h3 class="game-title">Among Us</h3>
+                        <div class="players-badge"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"></path></svg> 4-15</div>
                     </div>
-                    <p>Démasquez les imposteurs infiltrés à bord du vaisseau spatial avant qu'il ne soit trop tard.</p>
+                    <p>Démasquez les imposteurs infiltrés à bord du vaisseau spatial.</p>
                     <div class="card-actions">
-                        <a href="https://store.steampowered.com/app/945360/Among_Us/" target="_blank" class="btn-open">Jeu Steam &rarr;</a>
+                        <a href="https://store.steampowered.com/app/945360/Among_Us/" target="_blank" class="btn-open">Voir sur Steam</a>
                     </div>
                 </div>
             </div>
 
-            <!-- 6. Undercover (Réflexion) -->
-            <div class="game-card" data-category="reflexion">
+            <!-- 6. Bombparty -->
+            <div class="game-card" data-category="reflexion" data-id="bombparty">
                 <div class="game-banner">
-                    <div class="game-banner-bg" style="background-image: url('undercover.png');"></div>
-                    <span class="status-badge online">EN LIGNE</span>
+                    <div class="badge-container"><span class="game-badge bg-free">Gratuit</span><span class="game-badge bg-fr">FR</span></div>
+                    <button class="btn-fav" onclick="toggleFav(this, 'bombparty')"><svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></button>
+                    <div class="game-banner-bg" style="background-image: url('bombparty.png'); background-color:#2a2a35;"></div>
                 </div>
                 <div class="game-info">
                     <div class="game-header">
-                        <h3>Undercover</h3>
-                        <div class="players-badge"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg> 3-20</div>
+                        <h3 class="game-title">Bombparty</h3>
+                        <div class="players-badge"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"></path></svg> 2-16</div>
                     </div>
-                    <p>Un jeu d'ambiance et de déduction sociale. Trouvez qui cache son identité secrète parmi les civils.</p>
+                    <p>Trouvez un mot contenant la syllabe imposée avant que la bombe n'explose !</p>
                     <div class="card-actions">
-                        <a href="https://www.yanstarstudio.com/" target="_blank" class="btn-open">Ouvrir le jeu &rarr;</a>
-                        <button class="btn-copy" onclick="copyToClipboard('https://www.yanstarstudio.com/', this)" title="Copier le lien"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg></button>
+                        <a href="https://jklm.fun" target="_blank" class="btn-open">Jouer maintenant</a>
+                        <button class="btn-copy" onclick="copyLink('https://jklm.fun', this)"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg></button>
                     </div>
                 </div>
             </div>
 
-            <!-- 7. Bombparty (Réflexion) -->
-            <div class="game-card" data-category="reflexion">
+            <!-- 7. Fall Guys -->
+            <div class="game-card" data-category="action" data-id="fallguys">
                 <div class="game-banner">
-                    <div class="game-banner-bg" style="background-image: url('bombparty.png');"></div>
-                    <span class="status-badge online">EN LIGNE</span>
+                    <div class="badge-container"><span class="game-badge bg-free">Gratuit</span><span class="game-badge bg-multi">PC / Console</span></div>
+                    <button class="btn-fav" onclick="toggleFav(this, 'fallguys')"><svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></button>
+                    <div class="game-banner-bg" style="background-image: url('fallguys.png'); background-color:#2a2a35;"></div>
                 </div>
                 <div class="game-info">
                     <div class="game-header">
-                        <h3>Bombparty</h3>
-                        <div class="players-badge"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg> 2-16</div>
+                        <h3 class="game-title">Fall Guys</h3>
+                        <div class="players-badge"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"></path></svg> 1-40</div>
                     </div>
-                    <p>Trouvez un mot contenant la syllabe imposée avant que la bombe n'explose entre vos mains !</p>
+                    <p>Une course d'obstacles festive et chaotique. Couronnez le meilleur joueur !</p>
                     <div class="card-actions">
-                        <a href="https://jklm.fun" target="_blank" class="btn-open">Ouvrir le jeu &rarr;</a>
-                        <button class="btn-copy" onclick="copyToClipboard('https://jklm.fun', this)" title="Copier le lien"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg></button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 8. Pop Sauce (Culture) -->
-            <div class="game-card" data-category="culture">
-                <div class="game-banner">
-                    <div class="game-banner-bg" style="background-image: url('popsauce.png');"></div>
-                    <span class="status-badge online">EN LIGNE</span>
-                </div>
-                <div class="game-info">
-                    <div class="game-header">
-                        <h3>Pop Sauce</h3>
-                        <div class="players-badge"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg> 2-16</div>
-                    </div>
-                    <p>Testez votre culture populaire générale et soyez le premier à identifier les images ou citations.</p>
-                    <div class="card-actions">
-                        <a href="https://jklm.fun" target="_blank" class="btn-open">Ouvrir le jeu &rarr;</a>
-                        <button class="btn-copy" onclick="copyToClipboard('https://jklm.fun', this)" title="Copier le lien"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg></button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 9. Petit Bac (Réflexion) -->
-            <div class="game-card" data-category="reflexion">
-                <div class="game-banner">
-                    <div class="game-banner-bg" style="background-image: url('petitbac.png');"></div>
-                    <span class="status-badge online">EN LIGNE</span>
-                </div>
-                <div class="game-info">
-                    <div class="game-header">
-                        <h3>Jeu du Bac</h3>
-                        <div class="players-badge"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg> 2-40</div>
-                    </div>
-                    <p>Remplissez vos catégories le plus vite possible avec la lettre imposée. Attention aux réponses farfelues !</p>
-                    <div class="card-actions">
-                        <a href="https://petitbac.net/" target="_blank" class="btn-open">Ouvrir le jeu &rarr;</a>
-                        <button class="btn-copy" onclick="copyToClipboard('https://petitbac.net/', this)" title="Copier le lien"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg></button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 10. Fall Guys (Action) -->
-            <div class="game-card" data-category="action">
-                <div class="game-banner">
-                    <div class="game-banner-bg" style="background-image: url('fallguys.png');"></div>
-                    <span class="status-badge online">EN LIGNE</span>
-                </div>
-                <div class="game-info">
-                    <div class="game-header">
-                        <h3>Fall Guys</h3>
-                        <div class="players-badge"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg> 1-40</div>
-                    </div>
-                    <p>Une course d'obstacles festive et chaotique en multijoueur. Couronnez le meilleur joueur du stream.</p>
-                    <div class="card-actions">
-                        <a href="https://store.epicgames.com/fr/p/fall-guys" target="_blank" class="btn-open">Jeu Epic Games &rarr;</a>
+                        <a href="https://store.epicgames.com/fr/p/fall-guys" target="_blank" class="btn-open">Voir sur Epic</a>
                     </div>
                 </div>
             </div>
@@ -428,38 +448,112 @@
         </div>
     </main>
 
-    <!-- SCRIPT POUR LES FILTRES ET LE BOUTON COPIER -->
+    <!-- SCRIPTS -->
     <script>
-        // Fonction pour filtrer les jeux avec animation douce
-        function filterGames(category, btnElement) {
-            // Change l'apparence du bouton actif
-            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
-            btnElement.classList.add('active');
+        // 1. Initialisation des favoris depuis le LocalStorage
+        let favorites = JSON.parse(localStorage.getItem('hdk_favorites')) || [];
+
+        document.addEventListener("DOMContentLoaded", () => {
+            document.querySelectorAll('.btn-fav').forEach(btn => {
+                const gameId = btn.closest('.game-card').getAttribute('data-id');
+                if (favorites.includes(gameId)) {
+                    btn.classList.add('is-fav');
+                }
+            });
+        });
+
+        // 2. Fonction Toggle Favoris
+        function toggleFav(btnElement, gameId) {
+            if (favorites.includes(gameId)) {
+                favorites = favorites.filter(id => id !== gameId);
+                btnElement.classList.remove('is-fav');
+            } else {
+                favorites.push(gameId);
+                btnElement.classList.add('is-fav');
+                // Petit effet de saut
+                btnElement.style.transform = 'scale(1.3)';
+                setTimeout(() => btnElement.style.transform = '', 200);
+            }
+            localStorage.setItem('hdk_favorites', JSON.stringify(favorites));
             
+            // Si on est sur le filtre favoris, on met à jour la grille
+            if(document.querySelector('.filter-btn.active').getAttribute('data-filter') === 'fav') {
+                applyFilters();
+            }
+        }
+
+        // 3. Logique de Filtrage (Catégories + Favoris)
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        let currentFilter = 'all';
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentFilter = btn.getAttribute('data-filter');
+                
+                // Maj du titre
+                const gridTitle = document.getElementById('gridTitle');
+                if(currentFilter === 'fav') gridTitle.innerHTML = "⭐ Vos favoris";
+                else if(currentFilter === 'all') gridTitle.innerHTML = "<svg width='24' height='24' fill='currentColor' viewBox='0 0 24 24'><path d='M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z'/></svg> Tous les jeux";
+                else gridTitle.innerHTML = "🎮 " + btn.innerText;
+
+                applyFilters();
+            });
+        });
+
+        function applyFilters() {
             const cards = document.querySelectorAll('.game-card');
-            
-            // Première étape : faire disparaître les cartes non correspondantes
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+
             cards.forEach(card => {
-                if (category !== 'all' && card.getAttribute('data-category') !== category) {
-                    card.classList.add('fade-out');
-                    setTimeout(() => {
-                        card.classList.add('hidden');
-                    }, 300); // Temps de la transition
-                } else {
+                const category = card.getAttribute('data-category');
+                const gameId = card.getAttribute('data-id');
+                const title = card.querySelector('.game-title').innerText.toLowerCase();
+                
+                let matchFilter = false;
+                if (currentFilter === 'all') matchFilter = true;
+                else if (currentFilter === 'fav') matchFilter = favorites.includes(gameId);
+                else matchFilter = (category === currentFilter);
+
+                let matchSearch = title.includes(searchTerm);
+
+                if (matchFilter && matchSearch) {
                     card.classList.remove('hidden');
-                    // Petit délai pour l'effet d'apparition
-                    setTimeout(() => {
-                        card.classList.remove('fade-out');
-                    }, 10);
+                    setTimeout(() => card.classList.remove('fade-out'), 10);
+                } else {
+                    card.classList.add('fade-out');
+                    setTimeout(() => card.classList.add('hidden'), 300);
                 }
             });
         }
 
-        // Fonction pour copier le lien et afficher un feedback visuel premium
-        function copyToClipboard(url, btnElement) {
+        // 4. Barre de recherche
+        function searchGames() {
+            applyFilters();
+        }
+
+        // 5. Bouton Jeu Aléatoire
+        function pickRandomGame() {
+            // Prend uniquement les cartes visibles
+            const visibleCards = Array.from(document.querySelectorAll('.game-card:not(.hidden)'));
+            if (visibleCards.length === 0) return;
+
+            const randomCard = visibleCards[Math.floor(Math.random() * visibleCards.length)];
+            
+            // Scroll vers la carte
+            randomCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            
+            // Animation Highlight
+            randomCard.classList.remove('highlight');
+            void randomCard.offsetWidth; // Trigger reflow
+            randomCard.classList.add('highlight');
+        }
+
+        // 6. Copy Link
+        function copyLink(url, btnElement) {
             navigator.clipboard.writeText(url).then(() => {
                 const originalHTML = btnElement.innerHTML;
-                // Remplace par une icône check et change la couleur
                 btnElement.innerHTML = `<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path></svg>`;
                 btnElement.style.color = "var(--success)";
                 btnElement.style.borderColor = "var(--success)";
@@ -469,11 +563,8 @@
                     btnElement.style.color = "";
                     btnElement.style.borderColor = "";
                 }, 2000);
-            }).catch(err => {
-                console.error('Erreur lors de la copie : ', err);
             });
         }
     </script>
-
 </body>
 </html>
