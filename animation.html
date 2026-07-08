@@ -24,44 +24,20 @@
 
         /* === BANNIÈRE DE TEST SUPÉRIEURE === */
         .top-banner { 
-            background-color: #000000; 
-            color: #a0a0ab; 
-            text-align: center; 
-            font-size: 11px; 
-            padding: 7px 0; 
-            letter-spacing: 1.5px; 
-            font-weight: 600; 
-            position: fixed; 
-            top: 0; 
-            width: 100%; 
-            z-index: 1001; 
-            text-transform: uppercase;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+            background-color: #000000; color: #a0a0ab; text-align: center; font-size: 11px; padding: 7px 0; 
+            letter-spacing: 1.5px; font-weight: 600; position: fixed; top: 0; width: 100%; z-index: 1001; 
+            text-transform: uppercase; border-bottom: 1px solid rgba(255, 255, 255, 0.02);
         }
         .top-banner .dot { 
-            display: inline-block; 
-            width: 6px; 
-            height: 6px; 
-            background-color: var(--secondary); 
-            border-radius: 50%; 
-            margin-right: 8px; 
-            box-shadow: 0 0 10px var(--secondary);
-            vertical-align: middle;
+            display: inline-block; width: 6px; height: 6px; background-color: var(--secondary); 
+            border-radius: 50%; margin-right: 8px; box-shadow: 0 0 10px var(--secondary); vertical-align: middle;
         }
 
         /* === HEADER FIXE NAVIGATION === */
         .glass-header { 
-            position: fixed; 
-            top: 30px; 
-            left: 0; 
-            right: 0; 
-            height: 75px; 
-            background: rgba(15, 15, 18, 0.85); 
-            backdrop-filter: blur(16px); 
-            border-bottom: 1px solid var(--border-color); 
-            z-index: 1000; 
-            display: flex; 
-            align-items: center; 
+            position: fixed; top: 30px; left: 0; right: 0; height: 75px; background: rgba(15, 15, 18, 0.85); 
+            backdrop-filter: blur(16px); border-bottom: 1px solid var(--border-color); z-index: 1000; 
+            display: flex; align-items: center; 
         }
         .header-container { width: 100%; max-width: 1440px; margin: 0 auto; padding: 0 4%; display: flex; justify-content: space-between; align-items: center; }
         
@@ -82,84 +58,68 @@
         /* === CONTENU PRINCIPAL === */
         main { flex: 1; padding-top: 160px; max-width: 1440px; margin: 0 auto; width: 100%; padding-left: 4%; padding-right: 4%; padding-bottom: 80px; }
 
+        /* === FILTRES === */
+        .filters { display: flex; gap: 12px; margin-bottom: 30px; flex-wrap: wrap; }
+        .filter-btn { background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); color: var(--text-muted); padding: 8px 18px; border-radius: 20px; cursor: pointer; transition: var(--transition); font-size: 13px; font-weight: 500; }
+        .filter-btn:hover { background: rgba(255,255,255,0.1); color: var(--text-main); }
+        .filter-btn.active { background: var(--primary); color: #000; border-color: var(--primary); font-weight: 600; }
+
         /* === GRILLE DE JEUX === */
-        .games-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); 
-            gap: 24px; 
-            margin-top: 20px;
-        }
+        .games-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 24px; }
 
         .game-card { 
-            background: var(--bg-card); 
-            border-radius: 20px; 
-            overflow: hidden; 
-            border: 1px solid var(--border-color); 
-            transition: var(--transition);
-            display: flex;
-            flex-direction: column;
+            background: var(--bg-card); border-radius: 20px; overflow: hidden; 
+            border: 1px solid var(--border-color); transition: var(--transition);
+            display: flex; flex-direction: column;
         }
         .game-card:hover { 
-            transform: translateY(-6px); 
-            border-color: rgba(255, 255, 255, 0.12);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+            transform: translateY(-6px); border-color: rgba(255, 255, 255, 0.12); box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
         }
 
-        /* Bannière d'illustration du jeu */
-        .game-banner { 
-            width: 100%; 
-            height: 190px; 
-            background-size: cover; 
-            background-position: center; 
-            position: relative;
-            border-bottom: 1px solid rgba(255,255,255,0.02);
+        /* Bannière d'illustration & Zoom Effect */
+        .game-banner { width: 100%; height: 190px; position: relative; border-bottom: 1px solid rgba(255,255,255,0.02); overflow: hidden; }
+        .game-banner-bg {
+            position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background-size: cover; background-position: center; transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
+        .game-card:hover .game-banner-bg { transform: scale(1.08); }
         
-        /* Badges de statut */
         .status-badge { 
-            position: absolute; 
-            top: 16px; 
-            right: 16px; 
-            background: rgba(0, 0, 0, 0.6); 
-            backdrop-filter: blur(8px);
-            padding: 4px 12px; 
-            border-radius: 30px; 
-            font-size: 11px; 
-            font-weight: 700; 
-            letter-spacing: 0.5px;
-            display: flex; 
-            align-items: center; 
-            gap: 6px;
-            border: 1px solid rgba(255,255,255,0.05);
+            position: absolute; top: 16px; right: 16px; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(8px);
+            padding: 4px 12px; border-radius: 30px; font-size: 11px; font-weight: 700; letter-spacing: 0.5px;
+            display: flex; align-items: center; gap: 6px; border: 1px solid rgba(255,255,255,0.05); z-index: 2;
         }
         .status-badge.online { color: #5ce1a6; }
         .status-badge.online::before { content: ''; display: inline-block; width: 6px; height: 6px; background: #5ce1a6; border-radius: 50%; box-shadow: 0 0 8px #5ce1a6; }
 
-        /* Infos textuelles de la carte */
+        /* Infos textuelles */
         .game-info { padding: 24px; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
-        .game-info h3 { font-size: 20px; font-weight: 600; margin-bottom: 8px; letter-spacing: -0.3px; }
-        .game-info p { color: var(--text-muted); font-size: 13.5px; line-height: 1.5; margin-bottom: 20px; }
+        .game-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
+        .game-info h3 { font-size: 20px; font-weight: 600; letter-spacing: -0.3px; }
+        
+        /* Badge Joueurs */
+        .players-badge {
+            display: inline-flex; align-items: center; gap: 5px; background: rgba(255,255,255,0.04); 
+            padding: 4px 10px; border-radius: 12px; font-size: 11px; color: var(--text-muted); font-weight: 500; border: 1px solid rgba(255,255,255,0.02);
+        }
+        
+        .game-info p { color: var(--text-muted); font-size: 13.5px; line-height: 1.5; margin-bottom: 24px; }
 
-        /* Bouton Ouvrir */
+        /* Actions (Boutons) */
+        .card-actions { display: flex; gap: 10px; }
         .btn-open { 
-            background: rgba(255, 255, 255, 0.04); 
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            color: var(--text-main); 
-            padding: 10px 20px; 
-            border-radius: 12px; 
-            font-size: 13px; 
-            font-weight: 600; 
-            display: inline-flex; 
-            align-items: center; 
-            gap: 8px; 
-            align-self: flex-start;
-            transition: var(--transition);
+            background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--text-main); padding: 10px 20px; border-radius: 12px; font-size: 13px; 
+            font-weight: 600; display: inline-flex; align-items: center; justify-content: center; gap: 8px; flex: 1; transition: var(--transition);
         }
-        .game-card:hover .btn-open {
-            background: var(--text-main);
-            color: #000000;
-            transform: translateX(4px);
+        .game-card:hover .btn-open { background: var(--text-main); color: #000000; }
+        
+        .btn-copy {
+            background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--text-muted); width: 42px; border-radius: 12px; cursor: pointer; transition: var(--transition);
+            display: flex; align-items: center; justify-content: center;
         }
+        .btn-copy:hover { background: rgba(255,255,255,0.1); color: #fff; }
 
         /* === RESPONSIVE === */
         @media (max-width: 900px) {
@@ -170,16 +130,11 @@
 </head>
 <body>
 
-    <!-- Bannière supérieure de test -->
     <div class="top-banner"><span class="dot"></span> HDK — VERSION BETA EN COURS DE TEST</div>
 
-    <!-- Header fixe -->
     <header class="glass-header">
         <div class="header-container">
-            <div class="logo-area">
-                <a href="index.html">HDK<span>.</span></a>
-                <span class="badge-header">BETA</span>
-            </div>
+            <div class="logo-area"><a href="index.html">HDK<span>.</span></a><span class="badge-header">BETA</span></div>
             <nav class="nav-links">
                 <a href="index.html">Accueil</a>
                 <a href="museum.html">Museum</a>
@@ -188,156 +143,243 @@
                 <a href="news.html">News</a>
                 <a href="contact.html">Contact</a>
             </nav>
-            <a href="https://discord.gg/votre-lien" target="_blank" class="btn-discord">Discord</a>
+            <a href="#" class="btn-discord">Discord</a>
         </div>
     </header>
 
-    <!-- Section des animations -->
     <main>
+        <!-- Filtres -->
+        <div class="filters">
+            <button class="filter-btn active" onclick="filterGames('all', this)">Tous les jeux</button>
+            <button class="filter-btn" onclick="filterGames('dessin', this)">Dessin</button>
+            <button class="filter-btn" onclick="filterGames('reflexion', this)">Réflexion & Mots</button>
+            <button class="filter-btn" onclick="filterGames('culture', this)">Culture G</button>
+            <button class="filter-btn" onclick="filterGames('action', this)">Action & Party</button>
+        </div>
+
         <div class="games-grid">
             
-            <!-- 1. Scrib.io -->
-            <div class="game-card">
-                <div class="game-banner" style="background-image: url('skribbl.png');">
+            <!-- 1. Skribbl (Dessin) -->
+            <div class="game-card" data-category="dessin">
+                <div class="game-banner">
+                    <div class="game-banner-bg" style="background-image: url('skribbl.png');"></div>
                     <span class="status-badge online">EN LIGNE</span>
                 </div>
                 <div class="game-info">
-                    <div>
+                    <div class="game-header">
                         <h3>Skribbl.io</h3>
-                        <p>Affrontez la communauté dans un jeu de dessin et de devinettes effréné. Qui sera le plus rapide à deviner ?</p>
+                        <div class="players-badge"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg> 2-12</div>
                     </div>
-                    <a href="https://skribbl.io" target="_blank" class="btn-open">Ouvrir &rarr;</a>
+                    <p>Affrontez la communauté dans un jeu de dessin et de devinettes effréné. Qui sera le plus rapide ?</p>
+                    <div class="card-actions">
+                        <a href="https://skribbl.io" target="_blank" class="btn-open">Ouvrir &rarr;</a>
+                        <button class="btn-copy" onclick="copyToClipboard('https://skribbl.io', this)" title="Copier le lien"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg></button>
+                    </div>
                 </div>
             </div>
 
-            <!-- 2. Gartic Phone -->
-            <div class="game-card">
-                <div class="game-banner" style="background-image: url('gartic.png');">
+            <!-- 2. Gartic (Dessin) -->
+            <div class="game-card" data-category="dessin">
+                <div class="game-banner">
+                    <div class="game-banner-bg" style="background-image: url('gartic.png');"></div>
                     <span class="status-badge online">EN LIGNE</span>
                 </div>
                 <div class="game-info">
-                    <div>
+                    <div class="game-header">
                         <h3>Gartic Phone</h3>
-                        <p>Le jeu du téléphone arabe revisité en dessins. Attendez-vous à des quiproquos légendaires en stream !</p>
+                        <div class="players-badge"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg> 4-14+</div>
                     </div>
-                    <a href="https://garticphone.com/fr" target="_blank" class="btn-open">Ouvrir &rarr;</a>
+                    <p>Le jeu du téléphone arabe revisité en dessins. Attendez-vous à des quiproquos légendaires !</p>
+                    <div class="card-actions">
+                        <a href="https://garticphone.com/fr" target="_blank" class="btn-open">Ouvrir &rarr;</a>
+                        <button class="btn-copy" onclick="copyToClipboard('https://garticphone.com/fr', this)" title="Copier le lien"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg></button>
+                    </div>
                 </div>
             </div>
 
-            <!-- 3. Codenames -->
-            <div class="game-card">
-                <div class="game-banner" style="background-image: url('codenames.png');">
+            <!-- 3. Codenames (Réflexion) -->
+            <div class="game-card" data-category="reflexion">
+                <div class="game-banner">
+                    <div class="game-banner-bg" style="background-image: url('codenames.png');"></div>
                     <span class="status-badge online">EN LIGNE</span>
                 </div>
                 <div class="game-info">
-                    <div>
+                    <div class="game-header">
                         <h3>Codenames</h3>
-                        <p>Faites deviner vos mots secrets à votre équipe à l'aide d'un seul indice, tout en évitant l'assassin.</p>
+                        <div class="players-badge"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg> 4-8+</div>
                     </div>
-                    <a href="https://codenames.game/fr" target="_blank" class="btn-open">Ouvrir &rarr;</a>
+                    <p>Faites deviner vos mots secrets à votre équipe à l'aide d'un seul indice, tout en évitant l'assassin.</p>
+                    <div class="card-actions">
+                        <a href="https://codenames.game/fr" target="_blank" class="btn-open">Ouvrir &rarr;</a>
+                        <button class="btn-copy" onclick="copyToClipboard('https://codenames.game/fr', this)" title="Copier le lien"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg></button>
+                    </div>
                 </div>
             </div>
 
-            <!-- 4. Geoguessr -->
-            <div class="game-card">
-                <div class="game-banner" style="background-image: url('geoguessr.png');">
+            <!-- 4. Geoguessr (Culture) -->
+            <div class="game-card" data-category="culture">
+                <div class="game-banner">
+                    <div class="game-banner-bg" style="background-image: url('geoguessr.png');"></div>
                     <span class="status-badge online">EN LIGNE</span>
                 </div>
                 <div class="game-info">
-                    <div>
+                    <div class="game-header">
                         <h3>GeoGuessr</h3>
-                        <p>Explorez le monde et devinez où vous avez été parachuté. Parfait pour tester la géographie du chat.</p>
+                        <div class="players-badge"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg> Solo / Multi</div>
                     </div>
-                    <a href="https://www.geoguessr.com" target="_blank" class="btn-open">Ouvrir &rarr;</a>
+                    <p>Explorez le monde et devinez où vous avez été parachuté. Parfait pour tester la géographie du chat.</p>
+                    <div class="card-actions">
+                        <a href="https://www.geoguessr.com" target="_blank" class="btn-open">Ouvrir &rarr;</a>
+                        <button class="btn-copy" onclick="copyToClipboard('https://www.geoguessr.com', this)" title="Copier le lien"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg></button>
+                    </div>
                 </div>
             </div>
 
-            <!-- 5. Among Us -->
-            <div class="game-card">
-                <div class="game-banner" style="background-image: url('amongus.png');">
+            <!-- 5. Among Us (Action) -->
+            <div class="game-card" data-category="action">
+                <div class="game-banner">
+                    <div class="game-banner-bg" style="background-image: url('amongus.png');"></div>
                     <span class="status-badge online">EN LIGNE</span>
                 </div>
                 <div class="game-info">
-                    <div>
+                    <div class="game-header">
                         <h3>Among Us</h3>
-                        <p>Démasquez les imposteurs infiltrés à bord du vaisseau spatial avant qu'il ne soit trop tard pour l'équipage.</p>
+                        <div class="players-badge"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg> 4-15</div>
                     </div>
-                    <a href="#" target="_blank" class="btn-open">Ouvrir &rarr;</a>
+                    <p>Démasquez les imposteurs infiltrés à bord du vaisseau spatial avant qu'il ne soit trop tard.</p>
+                    <div class="card-actions">
+                        <a href="https://store.steampowered.com/app/945360/Among_Us/" target="_blank" class="btn-open">Jeu Steam &rarr;</a>
+                    </div>
                 </div>
             </div>
 
-            <!-- 6. Undercover -->
-            <div class="game-card">
-                <div class="game-banner" style="background-image: url('undercover.png');">
+            <!-- 6. Undercover (Réflexion) -->
+            <div class="game-card" data-category="reflexion">
+                <div class="game-banner">
+                    <div class="game-banner-bg" style="background-image: url('undercover.png');"></div>
                     <span class="status-badge online">EN LIGNE</span>
                 </div>
                 <div class="game-info">
-                    <div>
+                    <div class="game-header">
                         <h3>Undercover</h3>
-                        <p>Un jeu d'ambiance et de déduction sociale. Trouvez qui cache son identité secrète parmi les civils.</p>
+                        <div class="players-badge"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg> 3-20</div>
                     </div>
-                    <a href="#" target="_blank" class="btn-open">Ouvrir &rarr;</a>
+                    <p>Un jeu d'ambiance et de déduction sociale. Trouvez qui cache son identité secrète parmi les civils.</p>
+                    <div class="card-actions">
+                        <a href="https://www.yanstarstudio.com/" target="_blank" class="btn-open">Ouvrir &rarr;</a>
+                        <button class="btn-copy" onclick="copyToClipboard('https://www.yanstarstudio.com/', this)" title="Copier le lien"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg></button>
+                    </div>
                 </div>
             </div>
 
-            <!-- 7. Bombparty -->
-            <div class="game-card">
-                <div class="game-banner" style="background-image: url('bombparty.png');">
+            <!-- 7. Bombparty (Réflexion) -->
+            <div class="game-card" data-category="reflexion">
+                <div class="game-banner">
+                    <div class="game-banner-bg" style="background-image: url('bombparty.png');"></div>
                     <span class="status-badge online">EN LIGNE</span>
                 </div>
                 <div class="game-info">
-                    <div>
+                    <div class="game-header">
                         <h3>Bombparty</h3>
-                        <p>Trouvez un mot contenant la syllabe imposée avant que la bombe n'explose entre vos mains ! Pas de panique.</p>
+                        <div class="players-badge"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg> 2-16</div>
                     </div>
-                    <a href="https://jklm.fun" target="_blank" class="btn-open">Ouvrir &rarr;</a>
+                    <p>Trouvez un mot contenant la syllabe imposée avant que la bombe n'explose entre vos mains !</p>
+                    <div class="card-actions">
+                        <a href="https://jklm.fun" target="_blank" class="btn-open">Ouvrir &rarr;</a>
+                        <button class="btn-copy" onclick="copyToClipboard('https://jklm.fun', this)" title="Copier le lien"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg></button>
+                    </div>
                 </div>
             </div>
 
-            <!-- 8. Pop Sauce -->
-            <div class="game-card">
-                <div class="game-banner" style="background-image: url('popsauce.png');">
+            <!-- 8. Pop Sauce (Culture) -->
+            <div class="game-card" data-category="culture">
+                <div class="game-banner">
+                    <div class="game-banner-bg" style="background-image: url('popsauce.png');"></div>
                     <span class="status-badge online">EN LIGNE</span>
                 </div>
                 <div class="game-info">
-                    <div>
+                    <div class="game-header">
                         <h3>Pop Sauce</h3>
-                        <p>Testez votre culture populaire générale et soyez le premier à identifier les images ou citations affichées.</p>
+                        <div class="players-badge"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg> 2-16</div>
                     </div>
-                    <a href="https://jklm.fun" target="_blank" class="btn-open">Ouvrir &rarr;</a>
+                    <p>Testez votre culture populaire générale et soyez le premier à identifier les images ou citations.</p>
+                    <div class="card-actions">
+                        <a href="https://jklm.fun" target="_blank" class="btn-open">Ouvrir &rarr;</a>
+                        <button class="btn-copy" onclick="copyToClipboard('https://jklm.fun', this)" title="Copier le lien"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg></button>
+                    </div>
                 </div>
             </div>
 
-            <!-- 9. Petit Bac -->
-            <div class="game-card">
-                <div class="game-banner" style="background-image: url('petitbac.png');">
+            <!-- 9. Petit Bac (Réflexion) -->
+            <div class="game-card" data-category="reflexion">
+                <div class="game-banner">
+                    <div class="game-banner-bg" style="background-image: url('petitbac.png');"></div>
                     <span class="status-badge online">EN LIGNE</span>
                 </div>
                 <div class="game-info">
-                    <div>
+                    <div class="game-header">
                         <h3>Jeu du Bac</h3>
-                        <p>Remplissez vos catégories le plus vite possible avec la lettre imposée. Attention aux réponses farfelues !</p>
+                        <div class="players-badge"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg> 2-40</div>
                     </div>
-                    <a href="#" target="_blank" class="btn-open">Ouvrir &rarr;</a>
+                    <p>Remplissez vos catégories le plus vite possible avec la lettre imposée. Attention aux réponses farfelues !</p>
+                    <div class="card-actions">
+                        <a href="https://petitbac.net/" target="_blank" class="btn-open">Ouvrir &rarr;</a>
+                        <button class="btn-copy" onclick="copyToClipboard('https://petitbac.net/', this)" title="Copier le lien"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg></button>
+                    </div>
                 </div>
             </div>
 
-            <!-- 10. Fall Guys -->
-            <div class="game-card">
-                <div class="game-banner" style="background-image: url('fallguys.png');">
+            <!-- 10. Fall Guys (Action) -->
+            <div class="game-card" data-category="action">
+                <div class="game-banner">
+                    <div class="game-banner-bg" style="background-image: url('fallguys.png');"></div>
                     <span class="status-badge online">EN LIGNE</span>
                 </div>
                 <div class="game-info">
-                    <div>
+                    <div class="game-header">
                         <h3>Fall Guys</h3>
-                        <p>Une course d'obstacles festive et chaotique en multijoueur. Couronnez le meilleur joueur du stream.</p>
+                        <div class="players-badge"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg> 1-40</div>
                     </div>
-                    <a href="#" target="_blank" class="btn-open">Ouvrir &rarr;</a>
+                    <p>Une course d'obstacles festive et chaotique en multijoueur. Couronnez le meilleur joueur du stream.</p>
+                    <div class="card-actions">
+                        <a href="https://store.epicgames.com/fr/p/fall-guys" target="_blank" class="btn-open">Jeu Epic Games &rarr;</a>
+                    </div>
                 </div>
             </div>
 
         </div>
     </main>
+
+    <!-- SCRIPT POUR LES FILTRES ET LE BOUTON COPIER -->
+    <script>
+        // Fonction pour filtrer les jeux
+        function filterGames(category, btnElement) {
+            // Change l'apparence du bouton actif
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            btnElement.classList.add('active');
+            
+            // Affiche ou cache les cartes
+            const cards = document.querySelectorAll('.game-card');
+            cards.forEach(card => {
+                if (category === 'all' || card.getAttribute('data-category') === category) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Fonction pour copier le lien et afficher un mini feedback
+        function copyToClipboard(url, btnElement) {
+            navigator.clipboard.writeText(url).then(() => {
+                const originalIcon = btnElement.innerHTML;
+                btnElement.innerHTML = '✅';
+                setTimeout(() => {
+                    btnElement.innerHTML = originalIcon;
+                }, 2000);
+            });
+        }
+    </script>
 
 </body>
 </html>
