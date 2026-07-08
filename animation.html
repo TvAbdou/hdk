@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#0f0f12">
-    <title>HDK - Animations (Ultime)</title>
+    <meta name="theme-color" content="#09090b">
+    <title>HDK - Animations</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         /* === CONFIGURATION & THÈME SOMBRE === */
@@ -98,9 +98,7 @@
         main { flex: 1; padding-top: 150px; max-width: 1440px; margin: 0 auto; width: 100%; padding-left: 4%; padding-right: 4%; padding-bottom: 100px; }
 
         /* HEADER SECTION (Recherche & Aléatoire) */
-        .controls-header {
-            display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 30px; flex-wrap: wrap; gap: 20px;
-        }
+        .controls-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 30px; flex-wrap: wrap; gap: 20px; }
         .page-title h1 { font-size: 38px; font-weight: 800; letter-spacing: -1px; margin-bottom: 8px; background: linear-gradient(to right, #fff, var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .page-title p { color: var(--text-muted); font-size: 15px; }
 
@@ -134,9 +132,7 @@
         .filter-btn.fav-filter { display: flex; align-items: center; gap: 6px; color: #ffd166; }
         .filter-btn.fav-filter.active { background: rgba(255, 209, 102, 0.1); border-color: rgba(255, 209, 102, 0.3); }
 
-        /* SECTION POPULAIRES */
         .section-title { font-size: 20px; font-weight: 700; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
-        .section-title svg { color: #ffd166; }
 
         /* === GRILLE DE JEUX === */
         .games-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px; margin-bottom: 50px; }
@@ -150,7 +146,6 @@
             transform-style: preserve-3d;
         }
         
-        /* Lumière sous la carte */
         .game-card::before {
             content: ""; position: absolute; inset: -1px; border-radius: 20px;
             background: linear-gradient(45deg, transparent, var(--primary), transparent);
@@ -160,7 +155,6 @@
         .game-card:hover { transform: translateY(-8px); border-color: transparent; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8); }
         .game-card:hover::before { opacity: 1; }
 
-        /* Animation class for highlights */
         .game-card.highlight { animation: pulseHighlight 1s ease 2; border-color: var(--primary); box-shadow: 0 0 30px var(--primary-glow); }
         @keyframes pulseHighlight { 0% { transform: scale(1); } 50% { transform: scale(1.03); } 100% { transform: scale(1); } }
 
@@ -168,13 +162,9 @@
         .game-banner { width: 100%; height: 210px; position: relative; overflow: hidden; background-color: #1a1a24; }
         .game-banner::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 70%; background: linear-gradient(to top, var(--bg-card) 0%, transparent 100%); z-index: 1; }
         
-        .game-banner-bg {
-            position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-            background-size: cover; background-position: center; transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-        }
+        .game-banner-bg { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-size: cover; background-position: center; transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
         .game-card:hover .game-banner-bg { transform: scale(1.1) rotate(1.5deg); }
         
-        /* Badges absolus (Top Left / Right) */
         .badge-container { position: absolute; top: 16px; left: 16px; z-index: 2; display: flex; flex-wrap: wrap; gap: 8px; }
         .game-badge { padding: 4px 10px; border-radius: 8px; font-size: 10px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; backdrop-filter: blur(10px); }
         .bg-free { background: rgba(92, 225, 166, 0.2); color: var(--success); border: 1px solid rgba(92, 225, 166, 0.3); }
@@ -216,11 +206,10 @@
         }
         .btn-copy:hover { background: rgba(255,255,255,0.1); color: #fff; transform: scale(1.05); }
 
-        /* Effet Masquage JS */
         .game-card.hidden { display: none; }
         .game-card.fade-out { opacity: 0; transform: scale(0.95); pointer-events: none; }
 
-        /* === RESPONSIVE === */
+        /* Responsive */
         .burger-menu { display: none; background: transparent; border: none; color: #fff; font-size: 24px; cursor: pointer; }
         @media (max-width: 900px) {
             .nav-links, .btn-discord { display: none; }
@@ -231,10 +220,13 @@
             .games-grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
         }
 
-        /* Delays */
+        /* Delays for the 10 cards */
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
         .game-card:nth-child(1) { animation-delay: 0.05s; } .game-card:nth-child(2) { animation-delay: 0.1s; }
         .game-card:nth-child(3) { animation-delay: 0.15s; } .game-card:nth-child(4) { animation-delay: 0.2s; }
         .game-card:nth-child(5) { animation-delay: 0.25s; } .game-card:nth-child(6) { animation-delay: 0.3s; }
+        .game-card:nth-child(7) { animation-delay: 0.35s; } .game-card:nth-child(8) { animation-delay: 0.4s; }
+        .game-card:nth-child(9) { animation-delay: 0.45s; } .game-card:nth-child(10) { animation-delay: 0.5s; }
     </style>
 </head>
 <body>
@@ -271,7 +263,7 @@
         <div class="controls-header">
             <div class="page-title">
                 <h1>Hub d'Animations</h1>
-                <p>Découvrez, jouez et animez vos soirées avec notre sélection.</p>
+                <p>Découvrez, jouez et animez vos soirées avec notre sélection complète.</p>
             </div>
             <div class="tools">
                 <div class="search-box">
@@ -301,7 +293,7 @@
         <div class="games-grid" id="gamesGrid">
             
             <!-- 1. Skribbl -->
-            <div class="game-card popular" data-category="dessin" data-id="skribbl">
+            <div class="game-card" data-category="dessin" data-id="skribbl">
                 <div class="game-banner">
                     <div class="badge-container">
                         <span class="game-badge bg-free">Gratuit</span>
@@ -316,7 +308,7 @@
                         <h3 class="game-title">Skribbl.io</h3>
                         <div class="players-badge"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"></path></svg> 2-12</div>
                     </div>
-                    <p>Affrontez la communauté dans un jeu de dessin et de devinettes effréné. Qui sera le plus rapide ?</p>
+                    <p>Affrontez la communauté dans un jeu de dessin et de devinettes effréné.</p>
                     <div class="card-actions">
                         <a href="https://skribbl.io" target="_blank" class="btn-open">Jouer maintenant</a>
                         <button class="btn-copy" onclick="copyLink('https://skribbl.io', this)"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg></button>
@@ -325,7 +317,7 @@
             </div>
 
             <!-- 2. Gartic -->
-            <div class="game-card popular" data-category="dessin" data-id="gartic">
+            <div class="game-card" data-category="dessin" data-id="gartic">
                 <div class="game-banner">
                     <div class="badge-container">
                         <span class="game-badge bg-free">Gratuit</span>
@@ -368,7 +360,7 @@
             </div>
 
             <!-- 4. GeoGuessr -->
-            <div class="game-card popular" data-category="culture" data-id="geoguessr">
+            <div class="game-card" data-category="culture" data-id="geoguessr">
                 <div class="game-banner">
                     <div class="badge-container"><span class="game-badge" style="background: rgba(255, 117, 143, 0.2); color: #ff758f; border: 1px solid rgba(255, 117, 143, 0.3);">Freemium</span></div>
                     <button class="btn-fav" onclick="toggleFav(this, 'geoguessr')"><svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></button>
@@ -445,12 +437,81 @@
                 </div>
             </div>
 
+            <!-- 8. Undercover -->
+            <div class="game-card" data-category="reflexion" data-id="undercover">
+                <div class="game-banner">
+                    <div class="badge-container">
+                        <span class="game-badge bg-free">Gratuit</span>
+                        <span class="game-badge bg-multi">Mobile / Vocal</span>
+                    </div>
+                    <button class="btn-fav" onclick="toggleFav(this, 'undercover')"><svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></button>
+                    <div class="game-banner-bg" style="background-image: url('undercover.png'); background-color:#2a2a35;"></div>
+                </div>
+                <div class="game-info">
+                    <div class="game-header">
+                        <h3 class="game-title">Undercover</h3>
+                        <div class="players-badge"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"></path></svg> 3-20</div>
+                    </div>
+                    <p>Un jeu d'ambiance et de déduction sociale. Trouvez qui cache son identité secrète.</p>
+                    <div class="card-actions">
+                        <a href="https://www.yanstarstudio.com/" target="_blank" class="btn-open">Jouer maintenant</a>
+                        <button class="btn-copy" onclick="copyLink('https://www.yanstarstudio.com/', this)"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 9. Pop Sauce -->
+            <div class="game-card" data-category="culture" data-id="popsauce">
+                <div class="game-banner">
+                    <div class="badge-container">
+                        <span class="game-badge bg-free">Gratuit</span>
+                        <span class="game-badge bg-fr">FR</span>
+                    </div>
+                    <button class="btn-fav" onclick="toggleFav(this, 'popsauce')"><svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></button>
+                    <div class="game-banner-bg" style="background-image: url('popsauce.png'); background-color:#2a2a35;"></div>
+                </div>
+                <div class="game-info">
+                    <div class="game-header">
+                        <h3 class="game-title">Pop Sauce</h3>
+                        <div class="players-badge"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"></path></svg> 2-16</div>
+                    </div>
+                    <p>Testez votre culture populaire générale et identifiez les images ou citations au plus vite.</p>
+                    <div class="card-actions">
+                        <a href="https://jklm.fun" target="_blank" class="btn-open">Jouer maintenant</a>
+                        <button class="btn-copy" onclick="copyLink('https://jklm.fun', this)"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 10. Petit Bac -->
+            <div class="game-card" data-category="reflexion" data-id="petitbac">
+                <div class="game-banner">
+                    <div class="badge-container">
+                        <span class="game-badge bg-free">Gratuit</span>
+                        <span class="game-badge bg-fr">FR</span>
+                    </div>
+                    <button class="btn-fav" onclick="toggleFav(this, 'petitbac')"><svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></button>
+                    <div class="game-banner-bg" style="background-image: url('petitbac.png'); background-color:#2a2a35;"></div>
+                </div>
+                <div class="game-info">
+                    <div class="game-header">
+                        <h3 class="game-title">Jeu du Bac</h3>
+                        <div class="players-badge"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"></path></svg> 2-40</div>
+                    </div>
+                    <p>Remplissez vos catégories le plus vite possible avec la lettre imposée par le jeu.</p>
+                    <div class="card-actions">
+                        <a href="https://petitbac.net/" target="_blank" class="btn-open">Jouer maintenant</a>
+                        <button class="btn-copy" onclick="copyLink('https://petitbac.net/', this)"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg></button>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </main>
 
     <!-- SCRIPTS -->
     <script>
-        // 1. Initialisation des favoris depuis le LocalStorage
+        // Initialisation des favoris depuis le LocalStorage
         let favorites = JSON.parse(localStorage.getItem('hdk_favorites')) || [];
 
         document.addEventListener("DOMContentLoaded", () => {
@@ -462,7 +523,7 @@
             });
         });
 
-        // 2. Fonction Toggle Favoris
+        // Fonction Toggle Favoris
         function toggleFav(btnElement, gameId) {
             if (favorites.includes(gameId)) {
                 favorites = favorites.filter(id => id !== gameId);
@@ -470,19 +531,17 @@
             } else {
                 favorites.push(gameId);
                 btnElement.classList.add('is-fav');
-                // Petit effet de saut
                 btnElement.style.transform = 'scale(1.3)';
                 setTimeout(() => btnElement.style.transform = '', 200);
             }
             localStorage.setItem('hdk_favorites', JSON.stringify(favorites));
             
-            // Si on est sur le filtre favoris, on met à jour la grille
             if(document.querySelector('.filter-btn.active').getAttribute('data-filter') === 'fav') {
                 applyFilters();
             }
         }
 
-        // 3. Logique de Filtrage (Catégories + Favoris)
+        // Logique de Filtrage (Catégories + Favoris)
         const filterBtns = document.querySelectorAll('.filter-btn');
         let currentFilter = 'all';
 
@@ -492,7 +551,6 @@
                 btn.classList.add('active');
                 currentFilter = btn.getAttribute('data-filter');
                 
-                // Maj du titre
                 const gridTitle = document.getElementById('gridTitle');
                 if(currentFilter === 'fav') gridTitle.innerHTML = "⭐ Vos favoris";
                 else if(currentFilter === 'all') gridTitle.innerHTML = "<svg width='24' height='24' fill='currentColor' viewBox='0 0 24 24'><path d='M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z'/></svg> Tous les jeux";
@@ -528,29 +586,25 @@
             });
         }
 
-        // 4. Barre de recherche
+        // Barre de recherche
         function searchGames() {
             applyFilters();
         }
 
-        // 5. Bouton Jeu Aléatoire
+        // Bouton Jeu Aléatoire
         function pickRandomGame() {
-            // Prend uniquement les cartes visibles
             const visibleCards = Array.from(document.querySelectorAll('.game-card:not(.hidden)'));
             if (visibleCards.length === 0) return;
 
             const randomCard = visibleCards[Math.floor(Math.random() * visibleCards.length)];
-            
-            // Scroll vers la carte
             randomCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
             
-            // Animation Highlight
             randomCard.classList.remove('highlight');
-            void randomCard.offsetWidth; // Trigger reflow
+            void randomCard.offsetWidth;
             randomCard.classList.add('highlight');
         }
 
-        // 6. Copy Link
+        // Copy Link
         function copyLink(url, btnElement) {
             navigator.clipboard.writeText(url).then(() => {
                 const originalHTML = btnElement.innerHTML;
