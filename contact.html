@@ -6,46 +6,160 @@
     <title>Contact HDK</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* BASE & HEADER IDENTIQUES */
-        :root { --primary: #C9BCF1; --secondary: #B9E2CE; --bg-dark: #121212; --bg-card: #1E1E24; --text-main: #ffffff; --text-muted: #999999; }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
-        body { background-color: var(--bg-dark); color: var(--text-main); min-height: 100vh; }
-        a { text-decoration: none; color: inherit; }
+        /* === VARIABLES & BASE === */
+        :root { 
+            --primary: #C9BCF1; 
+            --secondary: #B9E2CE; 
+            --bg-dark: #0a0a0c; /* Légèrement assombri pour faire ressortir le glassmorphism */
+            --bg-card: rgba(30, 30, 36, 0.4); 
+            --text-main: #ffffff; 
+            --text-muted: #999999; 
+        }
         
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { background-color: var(--bg-dark); color: var(--text-main); min-height: 100vh; overflow-x: hidden; }
+        a { text-decoration: none; color: inherit; }
+
+        /* === BANNIERE & HEADER (Inchangés pour cohérence) === */
         .top-banner { background-color: #000; color: #888; text-align: center; font-size: 11px; padding: 6px 0; letter-spacing: 1px; font-weight: 500; position: fixed; top: 0; width: 100%; z-index: 1001; }
         .top-banner .dot { display: inline-block; width: 6px; height: 6px; background-color: var(--secondary); border-radius: 50%; margin-right: 8px; box-shadow: 0 0 8px var(--secondary); }
-        
-        .glass-header { position: fixed; top: 28px; left: 0; right: 0; height: 70px; background: rgba(18, 18, 18, 0.8); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.05); z-index: 1000; display: flex; align-items: center; }
+        .glass-header { position: fixed; top: 28px; left: 0; right: 0; height: 70px; background: rgba(10, 10, 12, 0.8); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.05); z-index: 1000; display: flex; align-items: center; }
         .header-container { width: 100%; max-width: 1440px; margin: 0 auto; padding: 0 5%; display: flex; justify-content: space-between; align-items: center; }
         .logo-area { display: flex; align-items: center; gap: 10px; font-size: 20px; font-weight: 700; }
         .badge-beta { background: rgba(255,255,255,0.1); padding: 3px 8px; border-radius: 12px; font-size: 10px; font-weight: 600; }
-        
         .nav-links { display: flex; gap: 30px; height: 100%; align-items: center; }
         .nav-links a { font-size: 14px; font-weight: 500; color: var(--text-muted); position: relative; padding: 25px 0; transition: 0.3s; }
         .nav-links a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0%; height: 2px; background-color: var(--text-main); transition: width 0.3s ease; }
         .nav-links a:hover, .nav-links a.active { color: var(--text-main); }
         .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
-        
-        .btn-discord { background: #fff; color: #000; padding: 8px 16px; border-radius: 20px; font-size: 13px; font-weight: 600; }
+        .btn-discord { background: #fff; color: #000; padding: 8px 16px; border-radius: 20px; font-size: 13px; font-weight: 600; transition: transform 0.2s, box-shadow 0.2s; }
+        .btn-discord:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(255,255,255,0.2); }
 
-        /* FORMULAIRE CONTACT */
-        main { padding-top: 150px; max-width: 600px; margin: 0 auto; padding-bottom: 100px; padding-left: 5%; padding-right: 5%; }
-        .page-title { text-align: center; margin-bottom: 40px; }
-        .page-title h1 { font-size: 40px; margin-bottom: 10px; }
+        /* === NOUVELLE SECTION CONTACT === */
+        main { 
+            padding-top: 160px; 
+            max-width: 1200px; 
+            margin: 0 auto; 
+            padding-bottom: 100px; 
+            padding-left: 5%; 
+            padding-right: 5%; 
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        /* Colonne de gauche : Infos */
+        .contact-info h1 { font-size: 48px; line-height: 1.2; margin-bottom: 20px; }
+        .contact-info h1 span { 
+            background: linear-gradient(135deg, var(--primary), var(--secondary)); 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+        }
+        .contact-info p { color: var(--text-muted); font-size: 16px; line-height: 1.6; margin-bottom: 40px; }
         
-        .contact-form { background: var(--bg-card); padding: 40px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.05); }
-        .form-group { margin-bottom: 25px; }
-        .form-group label { display: block; margin-bottom: 8px; font-size: 14px; font-weight: 500; color: var(--text-muted); }
-        .form-group input, .form-group textarea { width: 100%; background: #151515; border: 1px solid rgba(255,255,255,0.1); color: #fff; padding: 12px 15px; border-radius: 8px; font-family: inherit; transition: 0.3s; }
-        .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--primary); }
-        .form-group textarea { resize: vertical; min-height: 120px; }
+        .discord-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 25px;
+            border-radius: 16px;
+            display: inline-block;
+        }
+        .discord-card h3 { font-size: 18px; margin-bottom: 8px; font-weight: 600; }
+        .discord-card p { font-size: 14px; margin-bottom: 20px; color: var(--text-muted); }
+        .btn-discord-large {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        .btn-discord-large:hover {
+            background: #fff;
+            color: #000;
+        }
+
+        /* Colonne de droite : Formulaire */
+        .contact-form { 
+            background: var(--bg-card); 
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            padding: 40px; 
+            border-radius: 24px; 
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .form-group { margin-bottom: 25px; position: relative; }
+        .form-group label { 
+            display: block; 
+            margin-bottom: 10px; 
+            font-size: 13px; 
+            font-weight: 600; 
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted); 
+        }
+
+        .form-group input, .form-group textarea { 
+            width: 100%; 
+            background: rgba(0, 0, 0, 0.2); 
+            border: 1px solid rgba(255, 255, 255, 0.1); 
+            color: #fff; 
+            padding: 16px; 
+            border-radius: 12px; 
+            font-size: 15px;
+            transition: all 0.3s ease; 
+        }
         
-        .btn-submit { width: 100%; background: #fff; color: #000; border: none; padding: 15px; border-radius: 8px; font-size: 15px; font-weight: 600; cursor: pointer; transition: 0.3s; }
-        .btn-submit:hover { background: var(--primary); }
+        .form-group input::placeholder, .form-group textarea::placeholder {
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Effet Glow au focus */
+        .form-group input:focus, .form-group textarea:focus { 
+            outline: none; 
+            border-color: var(--primary); 
+            background: rgba(0, 0, 0, 0.4);
+            box-shadow: 0 0 15px rgba(201, 188, 241, 0.15);
+        }
+        
+        .form-group textarea { resize: vertical; min-height: 150px; }
+
+        .btn-submit { 
+            width: 100%; 
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: #000; 
+            border: none; 
+            padding: 16px; 
+            border-radius: 12px; 
+            font-size: 16px; 
+            font-weight: 600; 
+            cursor: pointer; 
+            transition: all 0.3s ease; 
+        }
+        
+        .btn-submit:hover { 
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(201, 188, 241, 0.3);
+        }
+
+        /* === RESPONSIVE === */
+        @media (max-width: 900px) {
+            main { grid-template-columns: 1fr; gap: 40px; padding-top: 130px; }
+            .contact-info { text-align: center; }
+            .contact-info h1 { font-size: 38px; }
+            .nav-links { display: none; } /* Cacher les liens sur mobile (nécessite un menu burger) */
+        }
     </style>
 </head>
 <body>
     <div class="top-banner"><span class="dot"></span> HDK — VERSION BETA EN COURS DE TEST</div>
+    
     <header class="glass-header">
         <div class="header-container">
             <div class="logo-area"><a href="index.html">HDK.</a><span class="badge-beta">BETA</span></div>
@@ -62,23 +176,33 @@
     </header>
 
     <main>
-        <div class="page-title">
-            <h1>Nous <span style="color: var(--primary);">Contacter</span></h1>
+        <div class="contact-info">
+            <h1>Nous <span>Contacter</span></h1>
+            <p>Tu as une idée de projet, un retour à faire sur la version bêta, ou tu veux simplement discuter avec l'équipe HDK ? Remplis le formulaire ou rejoins la communauté.</p>
+            
+            <div class="discord-card">
+                <h3>Serveur Discord</h3>
+                <p>La façon la plus rapide de nous joindre.</p>
+                <a href="#" class="btn-discord-large">Rejoindre le serveur</a>
+            </div>
         </div>
-        
+
         <form class="contact-form">
             <div class="form-group">
-                <label>Pseudo Discord ou Nom</label>
-                <input type="text" placeholder="Ex: TV Abdou" required>
+                <label for="pseudo">Pseudo Discord ou Nom</label>
+                <input type="text" id="pseudo" placeholder="Ex: TV Abdou" required>
             </div>
+            
             <div class="form-group">
-                <label>Sujet</label>
-                <input type="text" placeholder="Ex: Proposition de projet" required>
+                <label for="sujet">Sujet</label>
+                <input type="text" id="sujet" placeholder="Ex: Proposition de projet" required>
             </div>
+            
             <div class="form-group">
-                <label>Message</label>
-                <textarea placeholder="Votre message..." required></textarea>
+                <label for="message">Message</label>
+                <textarea id="message" placeholder="Détaille ta demande ici..." required></textarea>
             </div>
+            
             <button type="submit" class="btn-submit">Envoyer le message</button>
         </form>
     </main>
